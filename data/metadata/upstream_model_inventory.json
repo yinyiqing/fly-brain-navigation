@@ -1,0 +1,78 @@
+{
+  "commit": "91bdd1e7dcf193f3e7ca5a8933497fcef63b7960",
+  "verified_files": [
+    {
+      "path": "Readme.md",
+      "bytes": 3617,
+      "git_blob_sha1": "2f7d66ec7fbcd849fcb4c99e2412b171d37a565f"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1085,
+      "git_blob_sha1": "deca2d0f1e82e910d8248b0d27398eb9450976ee"
+    },
+    {
+      "path": "model.py",
+      "bytes": 11900,
+      "git_blob_sha1": "5ba7083cf55bf6092967f8d9065e86cd677efed1"
+    },
+    {
+      "path": "utils.py",
+      "bytes": 2176,
+      "git_blob_sha1": "a7785ce7141a2f348b9e0c8beb0d3dd8e992d497"
+    },
+    {
+      "path": "environment.yml",
+      "bytes": 174,
+      "git_blob_sha1": "27599c545d10fc702777cb372ab4333e73c225b8"
+    },
+    {
+      "path": "environment_full.yml",
+      "bytes": 3445,
+      "git_blob_sha1": "1428b314d40bf8b7dc2cb3991db213c12033fdfc"
+    },
+    {
+      "path": "example.ipynb",
+      "bytes": 10282,
+      "git_blob_sha1": "bc479485c42c18ef50762d9ab50817bc96d65c8d"
+    },
+    {
+      "path": "Completeness_783.csv",
+      "bytes": 3327347,
+      "git_blob_sha1": "b5a26b82b69a3c2e7fd99cd6810c36fc8f0e492b"
+    },
+    {
+      "path": "Connectivity_783.parquet",
+      "bytes": 100804642,
+      "git_blob_sha1": "d386555d1a5f40ebfa1380bcb05b1fab044855fd"
+    }
+  ],
+  "neuron_count": 138639,
+  "completeness_columns": [
+    "",
+    "Completed"
+  ],
+  "neuron_ids_match_official_783": false,
+  "connectivity_rows": 15091983,
+  "connectivity_schema": {
+    "Presynaptic_ID": "int64",
+    "Postsynaptic_ID": "int64",
+    "Presynaptic_Index": "int64",
+    "Postsynaptic_Index": "int64",
+    "Connectivity": "int64",
+    "Excitatory": "int64",
+    "Excitatory x Connectivity": "int64",
+    "__index_level_0__": "int64"
+  },
+  "invalid_index_rows": 0,
+  "null_values_required_columns": 0,
+  "absolute_signed_connectivity_sum": 54492922.0,
+  "runtime_simulation_tested": false,
+  "model_ids_not_in_official_set": 0,
+  "official_ids_omitted_from_model": 616,
+  "omitted_ids_occurrences_in_official_connections": 0,
+  "incorrect_model_id_index_mapping_rows": 0,
+  "explanation": "The model omits 616 neurons with no incident edges in the official proofread connection table.",
+  "model_duplicate_neuron_ids": 0,
+  "id_comparison_method": "Exact Python integers and Arrow int64; no float conversion"
+}

@@ -1,0 +1,179 @@
+{
+  "sha": "ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0",
+  "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/trees/ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0",
+  "tree": [
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b6a0652566d10360493952aec6d4a4febc77083",
+      "size": 40,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/5b6a0652566d10360493952aec6d4a4febc77083"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "399f19ae5e803cc49dfb0b01bc5b4f9e356503cb",
+      "size": 8926,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/399f19ae5e803cc49dfb0b01bc5b4f9e356503cb"
+    },
+    {
+      "path": "cocoglancer",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d075ec1db4412f2d958b86bbe1b0619cef6107ad",
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/trees/d075ec1db4412f2d958b86bbe1b0619cef6107ad"
+    },
+    {
+      "path": "cocoglancer/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "17055e5ace69d72a4be7c00d78bd2d98b3d2d013",
+      "size": 3594,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/17055e5ace69d72a4be7c00d78bd2d98b3d2d013"
+    },
+    {
+      "path": "cocoglancer/images",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "24cfd481aeb6ada18f0f9d4c3388cb74bee4b321",
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/trees/24cfd481aeb6ada18f0f9d4c3388cb74bee4b321"
+    },
+    {
+      "path": "cocoglancer/images/da1-query-flywire.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d259d895999282870424b4dbdd044abb0e6915cb",
+      "size": 70491,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/d259d895999282870424b4dbdd044abb0e6915cb"
+    },
+    {
+      "path": "cocoglancer/images/da1-query-hb.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1a297d85b7cb5cb06b03dac26eb5ef56eb255e78",
+      "size": 36218,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/1a297d85b7cb5cb06b03dac26eb5ef56eb255e78"
+    },
+    {
+      "path": "cocoglancer/images/da1-query-hbm.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "111665246b4343451bf8ee35688eed5622f1ce9a",
+      "size": 35065,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/111665246b4343451bf8ee35688eed5622f1ce9a"
+    },
+    {
+      "path": "cocoglancer/images/da1pnslr.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3d1a4519b797849c7a39fac38ebaa8b0c2bec9b4",
+      "size": 461855,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/3d1a4519b797849c7a39fac38ebaa8b0c2bec9b4"
+    },
+    {
+      "path": "cocoglancer/images/dp1m-20pct.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76eec1c423253dad906a7226451cf6fdd460b443",
+      "size": 82272,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/76eec1c423253dad906a7226451cf6fdd460b443"
+    },
+    {
+      "path": "cocoglancer/images/dp1m.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fb4a4c70103e5c1d81d1bc89f0d4ef0ca16f66e1",
+      "size": 2008700,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/fb4a4c70103e5c1d81d1bc89f0d4ef0ca16f66e1"
+    },
+    {
+      "path": "cocoglancer/images/layers.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ccd0f5b4858c9f3bc5151fff7d5ca51e3b557390",
+      "size": 31085,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/ccd0f5b4858c9f3bc5151fff7d5ca51e3b557390"
+    },
+    {
+      "path": "code",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "29739911759f5597bfda7a3873cb31f6c6a9e8a8",
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/trees/29739911759f5597bfda7a3873cb31f6c6a9e8a8"
+    },
+    {
+      "path": "code/annotation_counts.ipynb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b16a2c8f6922e5c271793c4c3464e93de547a21",
+      "size": 27508,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/5b16a2c8f6922e5c271793c4c3464e93de547a21"
+    },
+    {
+      "path": "flywire_annotations.Rproj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8e3c2ebc99e2e337f7d69948b93529a437590b27",
+      "size": 205,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/8e3c2ebc99e2e337f7d69948b93529a437590b27"
+    },
+    {
+      "path": "supplemental_files",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "180649a0002acdda04e077a48a3d8150b11d6b53",
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/trees/180649a0002acdda04e077a48a3d8150b11d6b53"
+    },
+    {
+      "path": "supplemental_files/Supplemental_file1_neuron_annotations.tsv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1a3168731618ee62a47392252d3af7664e739e9e",
+      "size": 27015208,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/1a3168731618ee62a47392252d3af7664e739e9e"
+    },
+    {
+      "path": "supplemental_files/Supplemental_file2_non_neuron_annotations.tsv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d4e225839f7d0dedbeba1dfca7a8dcf753554c48",
+      "size": 127761,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/d4e225839f7d0dedbeba1dfca7a8dcf753554c48"
+    },
+    {
+      "path": "supplemental_files/Supplemental_file3_summary_with_ngl_links.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9d2b24034c0cb833db32bfdd0d1b4ce48f326102",
+      "size": 758670,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/9d2b24034c0cb833db32bfdd0d1b4ce48f326102"
+    },
+    {
+      "path": "supplemental_files/Supplemental_file4_hemilineages_clustering.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7e787818277427b9b6a9d8300a91fd32eb6f8a43",
+      "size": 2315552,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/7e787818277427b9b6a9d8300a91fd32eb6f8a43"
+    },
+    {
+      "path": "supplemental_files/Supplemental_file5_hemibrain_meta.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "734442c4fe74bad3e49aaeb8b04cf384e301009b",
+      "size": 2618808,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/734442c4fe74bad3e49aaeb8b04cf384e301009b"
+    },
+    {
+      "path": "supplemental_files/Supplemental_files_columns.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9e0b9837db311410099f6c10e19f380a573ce3ff",
+      "size": 6674,
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/9e0b9837db311410099f6c10e19f380a573ce3ff"
+    }
+  ],
+  "truncated": false
+}

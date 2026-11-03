@@ -1,0 +1,15 @@
+{
+  "repository": "https://github.com/philshiu/Drosophila_brain_model",
+  "commit": "91bdd1e7dcf193f3e7ca5a8933497fcef63b7960",
+  "checked_out_at_utc": "2026-11-03T11:23:26.876348+00:00",
+  "local_path": "external/Drosophila_brain_model",
+  "code_license": "MIT",
+  "paper": "https://doi.org/10.1038/s41586-024-07763-9",
+  "selection": "sparse checkout of model, helper, example, environment, license and v783 inputs",
+  "runtime_tested": true,
+  "runtime_validation": "data/metadata/runtime_validation.json",
+  "runtime_test_scope": [
+    "100 ms CX induced subgraph",
+    "100 ms full v783 model"
+  ]
+}

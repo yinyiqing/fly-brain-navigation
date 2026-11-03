@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "comparison": "Fresh rerun in the same environment with identical configuration and seeds",
+  "checks": {
+    "metrics.csv": {
+      "identical": true,
+      "sha256": "b26a137df8406f65c903431dd4ce0c319a9b3d7bb3ac6313a2af060e5d71cd4f"
+    },
+    "summary.csv": {
+      "identical": true,
+      "sha256": "938da2a32637afdbc38a342aff0ea4725161c6266c083652b95ab998ccaa7b74"
+    },
+    "trajectories.csv": {
+      "identical": true,
+      "sha256": "a69ebb083282f4c818885dcb6b0db5fadf55eef8e0b09f4e3f3e632388655fbc"
+    },
+    "observations.csv": {
+      "identical": true,
+      "sha256": "79cf4e10ac79c0d309e6bea8ab581b4a2b6e274a255f581398979dd06a009c85"
+    },
+    "calibration_summary.json": {
+      "identical": true,
+      "sha256": "64696208692131fa0fc7d3330888437e2d1d951c5bcda0cabbcd02c952c84605"
+    },
+    "navigation_counts.npz": {
+      "identical_arrays": true
+    },
+    "calibration.npz": {
+      "identical_arrays": true
+    },
+    "readout.npz": {
+      "identical_arrays": true
+    }
+  },
+  "rerun_wall_seconds": 14.181833422975615
+}

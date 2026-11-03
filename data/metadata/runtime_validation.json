@@ -1,0 +1,99 @@
+{
+  "recorded_at_utc": "2026-11-03T11:46:42.225059+00:00",
+  "status": "passed",
+  "scope": "Single-trial, single-process runtime validation on CX and full v783 inputs",
+  "homing_implemented": false,
+  "runs": [
+    {
+      "status": "passed",
+      "scope": "cx",
+      "started_at_utc": "20261103T114327.957768Z",
+      "output_directory": "outputs/smoke/cx-20261103T114327.957768Z",
+      "available_memory_before_bytes": 5786296320,
+      "address_space_limit_bytes": 2147483648,
+      "duration_ms": 100.0,
+      "seed": 20261103,
+      "n_run": 1,
+      "n_proc": 1,
+      "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+      "limitation": "Runtime smoke test only; no homing task or functional circuit validation. CX scope drops every connection to a neuron outside the annotated CX set.",
+      "upstream_commit": "91bdd1e7dcf193f3e7ca5a8933497fcef63b7960",
+      "packages": {
+        "brian2": "2.5.1",
+        "numpy": "1.24.4",
+        "pandas": "1.5.3",
+        "pyarrow": "11.0.0",
+        "Cython": "0.29.33",
+        "joblib": "1.2.0",
+        "sympy": "1.11.1"
+      },
+      "codegen_target": "cython",
+      "neurons": 2869,
+      "connection_records": 300065,
+      "probe": {
+        "flywire_id": "720575940604801993",
+        "cell_type": "",
+        "hemibrain_type": "EPG",
+        "selection": "first EPG in upstream row order, otherwise first CX neuron"
+      },
+      "input_files": [
+        "outputs/smoke/cx-20261103T114327.957768Z/Completeness_CX_783.csv",
+        "outputs/smoke/cx-20261103T114327.957768Z/Connectivity_CX_783.parquet"
+      ],
+      "preparation_wall_seconds": 1.261646691011265,
+      "experiment_wall_seconds": 8.516812145942822,
+      "spike_count": 41,
+      "active_neurons": 13,
+      "stimulated_neuron_spikes": 13,
+      "other_neuron_spikes": 28,
+      "total_wall_seconds": 9.78124937787652,
+      "max_rss_kib": 261332
+    },
+    {
+      "status": "passed",
+      "scope": "full",
+      "started_at_utc": "20261103T114409.185389Z",
+      "output_directory": "outputs/smoke/full-20261103T114409.185389Z",
+      "available_memory_before_bytes": 5807230976,
+      "address_space_limit_bytes": 4294967296,
+      "duration_ms": 100.0,
+      "seed": 20261103,
+      "n_run": 1,
+      "n_proc": 1,
+      "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+      "limitation": "Runtime smoke test only; no homing task or functional circuit validation. CX scope drops every connection to a neuron outside the annotated CX set.",
+      "upstream_commit": "91bdd1e7dcf193f3e7ca5a8933497fcef63b7960",
+      "packages": {
+        "brian2": "2.5.1",
+        "numpy": "1.24.4",
+        "pandas": "1.5.3",
+        "pyarrow": "11.0.0",
+        "Cython": "0.29.33",
+        "joblib": "1.2.0",
+        "sympy": "1.11.1"
+      },
+      "codegen_target": "cython",
+      "neurons": 138639,
+      "connection_records": 15091983,
+      "probe": {
+        "flywire_id": "720575940604801993",
+        "cell_type": "",
+        "hemibrain_type": "EPG",
+        "selection": "first EPG in upstream row order, otherwise first CX neuron"
+      },
+      "input_files": [
+        "external/Drosophila_brain_model/Completeness_783.csv",
+        "external/Drosophila_brain_model/Connectivity_783.parquet"
+      ],
+      "preparation_wall_seconds": 0.8148637618869543,
+      "experiment_wall_seconds": 3.389480744022876,
+      "spike_count": 41,
+      "active_neurons": 13,
+      "stimulated_neuron_spikes": 13,
+      "other_neuron_spikes": 28,
+      "total_wall_seconds": 4.208207880845293,
+      "max_rss_kib": 2415848
+    }
+  ],
+  "measurement_note": "Wall times include import/input preparation, model construction, code generation as needed, simulation and output. CX ran first; the subsequent full test could reuse compilation cache. max_rss_kib measures the main Python process, not aggregate child-process memory."
+}

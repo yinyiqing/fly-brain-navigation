@@ -1,0 +1,66 @@
+{
+  "verified_at_utc": "2026-11-03T11:03:44.722045+00:00",
+  "dataset": "FlyWire FAFB materialization 783",
+  "files": [
+    {
+      "path": "data/raw/flywire_783/proofread_connections_783.feather",
+      "bytes": 852022274,
+      "md5": "f48f972d262323a102aed49af1396b8a",
+      "url": "https://zenodo.org/api/records/10676866/files/proofread_connections_783.feather/content",
+      "source_record": "https://doi.org/10.5281/zenodo.10676866",
+      "sha256": "24f960ae3e7d4f8cd30db3b62e99fb5179cc3d1e76d8c155bfb441e9737d3faf",
+      "git_blob_sha1": "cd1bb8d9e12da52487dcd7e50877f0e020c1c7cc"
+    },
+    {
+      "path": "data/raw/flywire_783/proofread_root_ids_783.npy",
+      "bytes": 1114168,
+      "md5": "e0e6c19732fd8c7a4e39a2d170105421",
+      "url": "https://zenodo.org/api/records/10676866/files/proofread_root_ids_783.npy/content",
+      "source_record": "https://doi.org/10.5281/zenodo.10676866",
+      "sha256": "7c7b7e818e9232e5ab64793d52ba20574dbe9da3a6509fbc74193b0f259a01be",
+      "git_blob_sha1": "5f596887f56db70fe17fde910cb7c0a98f871095"
+    },
+    {
+      "path": "data/metadata/annotations_README_v2.1.0.md",
+      "bytes": 8926,
+      "git_blob_sha1": "399f19ae5e803cc49dfb0b01bc5b4f9e356503cb",
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/399f19ae5e803cc49dfb0b01bc5b4f9e356503cb",
+      "headers": {
+        "Accept": "application/vnd.github.raw+json"
+      },
+      "source_path": "README.md",
+      "source_commit": "ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0",
+      "source_tag": "v2.1.0",
+      "sha256": "5ad614c63f22609218428574078929609e0a3b28d93de6697dc73f3b4a14ebbe",
+      "md5": "cc5361d2937f981f2a6c668ab552a4b9"
+    },
+    {
+      "path": "data/raw/flywire_783/neuron_annotations_v2.1.0.tsv",
+      "bytes": 27015208,
+      "git_blob_sha1": "1a3168731618ee62a47392252d3af7664e739e9e",
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/1a3168731618ee62a47392252d3af7664e739e9e",
+      "headers": {
+        "Accept": "application/vnd.github.raw+json"
+      },
+      "source_path": "supplemental_files/Supplemental_file1_neuron_annotations.tsv",
+      "source_commit": "ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0",
+      "source_tag": "v2.1.0",
+      "sha256": "30be6c73975a70c56d930e27911f36455d3886e15abf383b78edd2a5d679e0b6",
+      "md5": "8527e0a95ed5f112766b13260a91e8e2"
+    },
+    {
+      "path": "data/metadata/annotations_columns_v2.1.0.md",
+      "bytes": 6674,
+      "git_blob_sha1": "9e0b9837db311410099f6c10e19f380a573ce3ff",
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/git/blobs/9e0b9837db311410099f6c10e19f380a573ce3ff",
+      "headers": {
+        "Accept": "application/vnd.github.raw+json"
+      },
+      "source_path": "supplemental_files/Supplemental_files_columns.md",
+      "source_commit": "ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0",
+      "source_tag": "v2.1.0",
+      "sha256": "5bed86549dd6d2837397c2a451db7606718f5d5be8a8a7a7a49219aade1c9802",
+      "md5": "12bdb3f508a8135611b00fa2c371cfbb"
+    }
+  ]
+}

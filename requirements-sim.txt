@@ -1,0 +1,12 @@
+# Python 3.10; dedicated environment for the pinned upstream Brian2 model.
+# Core versions follow environment.yml; compatible patch releases are pinned.
+brian2==2.5.1
+numpy==1.24.4
+pandas==1.5.3
+pyarrow==11.0.0
+joblib==1.2.0
+Cython==0.29.33
+sympy==1.11.1
+setuptools==65.5.1
+wheel==0.43.0
+matplotlib==3.7.5

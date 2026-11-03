@@ -1,0 +1,22 @@
+{
+  "checked_at_utc": "2026-11-03T12:29:07.428806+00:00",
+  "unit_tests": {
+    "passed": 4,
+    "command": ".venv-sim/bin/python -m unittest discover -s tests -v"
+  },
+  "same_environment_reproduction": "examples/coursework-20261103/reproducibility.json",
+  "source_hash_match": "Verified against examples/coursework-20261103/manifest.json",
+  "upstream_worktree_clean": true,
+  "dependency_check": "pip check: No broken requirements found.",
+  "report": {
+    "file": "reports/数字果蝇归巢课程报告.docx",
+    "rendered_pages": 3,
+    "all_pages_visually_reviewed": true,
+    "sha256": "86ead5ca0d5e03c2ab7378f4876029186a46d11129f78bf2e1b8bac15a29c216"
+  },
+  "figures_visually_reviewed": [
+    "figure1_trajectories.png",
+    "figure2_errors.png"
+  ],
+  "project_whitespace_check": "passed; excludes two downloaded annotation documents preserved byte-for-byte for upstream blob checks"
+}
