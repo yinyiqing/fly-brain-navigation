@@ -186,11 +186,11 @@ def build(reference, output):
     image_doc = Document()
     shape = image_doc.add_paragraph().add_run().add_picture(str(ROOT / "reports/assets/paper_trajectory.png"), width=Cm(14.65))
     drawing = deepcopy(image_doc.paragraphs[0]._p.find('.//' + q('w:drawing')))
-    drawing.find('.//wp:docPr',NS).set('descr','预定种子701下的低噪声成功与高噪声失败轨迹')
+    drawing.find('.//wp:docPr',NS).set('descr','种子701的成功与失败轨迹：蓝虚线出发、橙实线返程、紫点划线搜索；A为家，B开始返程，C开始搜索，箭头指示移动方向，无障碍物')
     drawing.find('.//a:blip',NS).set(q('r:embed'),'rIdFinalTrajectory')
     p = paragraph('',82,keep=True)
     p.find(q('w:r')).append(drawing)
-    paragraph("图一 固定种子 701 的返程轨迹。灰色为外出，绿色为返程与搜索；圆内半径为 1。两图均含 2° 执行误差，高噪声一例最终失败。",84,indent=False)
+    paragraph("图一 固定种子 701 的归巢轨迹。A 为家，B 开始返程，C 开始搜索；蓝虚线为出发，橙实线为返程，紫点划线为搜索，箭头示方向。无障碍物，两图均含 2° 转向执行误差。",84,indent=False)
     paragraph("方向标签对照见表二。五组置换均明显增大未见方向误差，低噪声归巢成功次数下降且路程增加。置换 804 仍到达 13/15，表明后续搜索能补救部分读出错误。这检验的是正确方向对应关系，不是连接组相对随机网络的优势。")
     rows=[["读出条件","方向误差","到达次数","平均返程路程"]]
     for label,method,variant in [("正常读出","cx_normal",0)]+[(f"标签置换 {s}","cx_shuffled_labels",s) for s in range(801,806)]+[("关闭读出","readout_off",0)]:

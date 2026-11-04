@@ -1,6 +1,6 @@
 {
   "artifact": "reports/数字果蝇归巢研究_24025110_尹一清.docx",
-  "sha256": "c92051416ee5bf780ed349a14092743621ca914df3c7b7b38c9a9be8ae74c6c1",
+  "sha256": "56c8cacf81d3cb3baccaf78c4d980c0aa998ed9a6dbf55ef02af8151df53e4e9",
   "reference_sha256": "6508f624032146a8554fddcb05e7c584c07ca9d4c5f346d05b757f118d1259c3",
   "reference_unchanged": true,
   "section_properties_unchanged": true,
@@ -16,10 +16,31 @@
     "robustness_rows": 1440,
     "neural_rerun": false
   },
-  "offline_preview_checks": {
-    "local_link_references_resolved": 16,
-    "gif_frames_decoded": 135,
-    "browser_visual_check": "Not performed: browser tool disallowed the local file URL."
-  },
-  "export_method": "Pinned Git archive with per-file SHA-256 manifest; destination must not exist."
+  "export_method": "Pinned Git archive with per-file SHA-256 manifest; destination must not exist.",
+  "presentation": "Static PNG/PDF paper figures; no HTML entry point",
+  "paper_figure_checks": {
+    "data_source": "examples/validation-20261104/demo_trajectories.csv",
+    "route": "original",
+    "seed": 701,
+    "observation_noise_deg": [
+      5,
+      15
+    ],
+    "execution_noise_deg": 2,
+    "phase_boundaries_and_distances_match_saved_metrics": true,
+    "trajectory_and_experiment_results_unchanged": true,
+    "png_size": [
+      2320,
+      1440
+    ],
+    "png_dpi": 400,
+    "pdf_vector_page_count": 1,
+    "pdf_has_bitmap_images": false,
+    "pdf_truetype_fonts_embedded": true,
+    "pdf_render_visually_checked": true,
+    "image_sha256": "c7d583e7ee64fa529ae973d84faf10bf61dcc0a2967865a27f1f1c63c7725d26",
+    "pdf_sha256": "f09bc4608ee8772718455ef6499aa3a84550dc24bfccf4a912439f765bbe51fe",
+    "report_pages_after_update": 5,
+    "all_report_pages_visually_checked_after_update": true
+  }
 }

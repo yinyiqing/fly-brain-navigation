@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""Export a pinned Git snapshot, final paper and an offline results page.
+"""Export a pinned Git snapshot, final paper and static publication figures.
 
 Only the Python standard library and Git are needed. Existing output folders
 are never overwritten. Raw downloaded datasets and environments are excluded
 because they are not tracked by Git.
 """
 import argparse
-import csv
 from datetime import datetime, timezone
 import hashlib
-import html
 import io
 import json
 from pathlib import Path
@@ -31,7 +29,7 @@ def export(output, revision):
     tree_id = git("rev-parse", f"{object_id}^{{tree}}").decode().strip()
     kind = git("cat-file", "-t", object_id).decode().strip()
     archive = zipfile.ZipFile(io.BytesIO(git("archive", "--format=zip", object_id)))
-    required = [f"reports/{PAPER}", "docs/delivery_preview.html",
+    required = [f"reports/{PAPER}", "reports/assets/paper_trajectory.pdf",
                 "examples/validation-20261104/robustness_summary.csv"]
     for name in required:
         if name not in archive.namelist():
@@ -52,40 +50,21 @@ def export(output, revision):
 
     copy(f"reports/{PAPER}", f"01_论文/{PAPER}")
     results = "examples/validation-20261104"
-    copy(f"{results}/homing_demo.gif", "02_演示/归巢演示.gif")
-    copy(f"{results}/demo_final_frame.png", "02_演示/轨迹终帧.png")
-    for name in ["figure1_neural_controls.png", "figure2_return_robustness.png",
-                 "figure3_budget_tradeoff.png"]:
-        copy(f"{results}/{name}", f"03_结果图表/{name}")
+    figures = [("reports/assets/paper_trajectory", "图1_出发返程与搜索"),
+               (f"{results}/figure1_neural_controls", "图2_神经方向对照"),
+               (f"{results}/figure2_return_robustness", "图3_返程执行误差"),
+               (f"{results}/figure3_budget_tradeoff", "图4_搜索预算与代价")]
+    for source_stem, destination_stem in figures:
+        for suffix in ["png", "pdf"]:
+            copy(f"{source_stem}.{suffix}", f"02_论文插图/{destination_stem}.{suffix}")
+    copy("docs/paper_figures.md", "02_论文插图/图注与插图说明.md")
+    copy(f"{results}/homing_demo.gif", "03_结果数据/补充演示/归巢演示_旧版.gif")
+    copy(f"{results}/demo_final_frame.png", "03_结果数据/补充演示/轨迹终帧_旧版.png")
     for path in sorted((source / results).glob("*.csv")):
-        copy(f"{results}/{path.name}", f"03_结果图表/数据表/{path.name}")
-    copy("docs/validation_results.md", "03_结果图表/实验结果说明.md")
+        copy(f"{results}/{path.name}", f"03_结果数据/数据表/{path.name}")
+    copy("docs/validation_results.md", "03_结果数据/实验结果说明.md")
     copy("docs/final_delivery.md", "00_阅读说明.md")
 
-    with (source / results / "robustness_summary.csv").open(encoding="utf-8") as stream:
-        rows = list(csv.DictReader(stream))
-    display = []
-    for noise in [0, 5, 15]:
-        conditions = []
-        for execution in [0, 2]:
-            match = [r for r in rows if r["method"] == "cx"
-                     and float(r["noise_deg"]) == noise
-                     and float(r["execution_noise_deg"]) == execution
-                     and float(r["budget"]) == 72]
-            if len(match) != 1:
-                raise ValueError(f"Ambiguous summary for {noise}/{execution}")
-            conditions.append(match[0])
-        exact, noisy = conditions
-        display.append(
-            f'<tr><th scope="row">{noise}°</th>'
-            f'<td>{int(exact["successes"])}/{int(exact["trials"])}</td>'
-            f'<td>{int(noisy["successes"])}/{int(noisy["trials"])}</td>'
-            f'<td>{float(noisy["mean_return_distance"]):.2f}</td></tr>')
-    page = (source / "docs/delivery_preview.html").read_text(encoding="utf-8")
-    page = page.replace("{{RESULT_ROWS}}", "\n".join(display))
-    page = page.replace("{{REVISION}}", html.escape(object_id[:12]))
-    page = page.replace("{{PAPER}}", html.escape(PAPER, quote=True))
-    (output / "00_打开看效果.html").write_text(page, encoding="utf-8")
     files = sorted(p for p in output.rglob("*") if p.is_file())
     manifest = {
         "created_utc": datetime.now(timezone.utc).isoformat(),
@@ -93,6 +72,7 @@ def export(output, revision):
         "source_revision": object_id,
         "source_object_type": kind,
         "source_tree": tree_id,
+        "presentation": "Static paper figures in PNG and PDF; no HTML entry point",
         "note": "Tracked source snapshot; no Git history, environments or downloaded raw datasets. Hashes exclude this manifest.",
         "files": {str(p.relative_to(output)): hashlib.sha256(p.read_bytes()).hexdigest()
                   for p in files},

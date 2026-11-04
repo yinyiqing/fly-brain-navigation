@@ -2,11 +2,12 @@
 
 这是一份小规模课程实验。基于 FlyWire v783 的真实中央复合体连接组，将人为编码的方向输入转成神经活动，再由外部程序做路径积分、返程和有限范围搜索。最新验证使用三条外出路线、三档观测噪声、十个新随机种子，并加入返程转向执行误差。
 
-**已整理最终课程成果：5 页论文、真实轨迹动画、实验图表与可复现源码。没有实现连接组自主路径积分，也没有恢复真实果蝇的生物罗盘。**
+**已整理最终课程成果：5 页论文、分阶段静态轨迹图、实验图表与可复现源码。没有实现连接组自主路径积分，也没有恢复真实果蝇的生物罗盘。**
 
 ## 查看最终成果
 
 - [最终论文](reports/数字果蝇归巢研究_24025110_尹一清.docx)：沿用指定参考报告排版，覆盖最新实验、对照、搜索代价与限制；原有阶段报告保留。
+- [论文轨迹图 PNG](reports/assets/paper_trajectory.png)、[矢量 PDF](reports/assets/paper_trajectory.pdf)：蓝色出发、橙色返程、紫色搜索，标明起点与阶段切换位置。[图注与插图说明](docs/paper_figures.md)。
 - [成果包说明](docs/final_delivery.md)：目录结构、查看方式和复现步骤。
 
 在 Git 仓库中运行下面的命令，将当前提交导出为独立成果包。仅需 Python 标准库和 Git；目录必须不存在，未提交的文件不会进入成果包。
@@ -15,7 +16,7 @@
 python scripts/package_delivery.py --output ../最终成果
 ```
 
-双击成果包里的 `00_打开看效果.html` 即可离线查看动画、数据与图表。`04_完整项目` 含该提交的源码、配置、依赖清单和各阶段结果；大型公开数据由脚本重新下载，环境与 Git 历史不重复打包。
+先看成果包里的 `02_论文插图/图1_出发返程与搜索.png`，再阅读 `01_论文` 中的最终论文。静态图同时提供 PNG 与 PDF，可直接用于论文。`04_完整项目` 含该提交的源码、配置、依赖清单和各阶段结果；大型公开数据由脚本重新下载，环境与 Git 历史不重复打包。
 
 ## 最新验证
 
@@ -36,9 +37,11 @@ python scripts/package_delivery.py --output ../最终成果
 - [神经方向信息对照](examples/validation-20261104/figure1_neural_controls.png)、[返程误差验证](examples/validation-20261104/figure2_return_robustness.png)、[搜索预算曲线](examples/validation-20261104/figure3_budget_tradeoff.png)。
 - [逐次返程结果](examples/validation-20261104/robustness_metrics.csv)、[全部标签置换对照](examples/validation-20261104/ablation_by_variant.csv)。
 
-下面的动画使用预先固定的原路线、种子 701 和 2° 返程转向误差；由保存的真实仿真轨迹生成，各面板每帧行走距离相同。
+下面的论文图使用预先固定的原路线、种子 701 和 2° 返程转向误差。A 是家，沿蓝虚线外出到 B 后开始返程，橙线到 C 后开始紫色搜索。箭头表示运动方向，环境无障碍物。
 
-![数字果蝇归巢与有限搜索演示](examples/validation-20261104/homing_demo.gif)
+![数字果蝇出发、返程和搜索的静态轨迹](reports/assets/paper_trajectory.png)
+
+[旧版动画](examples/validation-20261104/homing_demo.gif)保留为补充材料。
 
 ## 此前阶段：实际到达起点区域
 
@@ -176,7 +179,7 @@ FlyWire v783 数据与注释、Shiu 等的公开模型均保留版本和出处�
 python scripts/build_final_report.py --reference /path/to/参考报告.docx
 ```
 
-输出为 `reports/数字果蝇归巢研究_24025110_尹一清.docx`，不会修改原始参考或阶段报告。论文图由 `scripts/plot_paper_trajectory.py` 绘制，已保存在 `reports/assets/`；重画需要 matplotlib 和 pandas。修改后应重新检查分页，当前版本按任务书要求渲染核对为 5 页。
+输出为 `reports/数字果蝇归巢研究_24025110_尹一清.docx`，不会修改原始参考或阶段报告。论文图由 `scripts/plot_paper_trajectory.py` 绘制，已保存在 `reports/assets/`，含 PNG 和矢量 PDF；重画需要 matplotlib、NumPy、pandas 和中文字体（如 Noto Sans CJK）。修改后应重新检查分页，当前版本按任务书要求渲染核对为 5 页。
 
 此前的阶段报告仍可单独生成；依赖对应两组实验结果和图表：
 

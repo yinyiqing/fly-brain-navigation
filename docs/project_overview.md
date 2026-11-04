@@ -34,9 +34,9 @@ flowchart LR
 
 ## 阅读和运行顺序
 
-先读仓库 README 与 `docs/validation_results.md`；查看 `examples/validation-20261104/homing_demo.gif` 和三张验证图。动画固定使用原路线和种子 701，不通过挑选试验美化效果。
+先读仓库 README 与 `docs/validation_results.md`，查看 `reports/assets/paper_trajectory.png` 和三张验证图。论文轨迹图标明外出、返程、搜索的阶段及方向，并提供矢量 PDF；固定使用原路线和种子 701，不通过挑选试验美化效果。
 
-最终论文为 `reports/数字果蝇归巢研究_24025110_尹一清.docx`，沿用用户指定参考格式，共 5 页，已纳入最新验证与失败分析。用 `scripts/package_delivery.py --output ../最终成果` 可导出含离线展示页的完整成果包，具体说明见 `docs/final_delivery.md`。
+最终论文为 `reports/数字果蝇归巢研究_24025110_尹一清.docx`，沿用用户指定参考格式，共 5 页，已纳入最新验证与失败分析。用 `scripts/package_delivery.py --output ../最终成果` 可导出以论文、静态图表为入口的完整成果包，具体说明见 `docs/final_delivery.md`。
 
 完整仿真在 Linux、Python 3.10 和固定依赖环境中运行。服务器中已有数据和环境，README 提供命令。仅检查导航与重放结果时，无需 Brian2、大数据下载或显卡，只需 NumPy 和 pandas。GitHub Actions 会运行单元检查、旧结果导航重放和最新十张验证表核对；它不执行完整神经仿真。
 
