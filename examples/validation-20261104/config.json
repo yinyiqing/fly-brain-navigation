@@ -1,0 +1,43 @@
+{
+  "source_results": "examples/search-20261104",
+  "trial_seeds": [
+    701,
+    702,
+    703,
+    704,
+    705,
+    706,
+    707,
+    708,
+    709,
+    710
+  ],
+  "label_shuffle_seeds": [
+    801,
+    802,
+    803,
+    804,
+    805
+  ],
+  "execution_noise_deg": [
+    0,
+    2
+  ],
+  "execution_seed": 20261104,
+  "search_budgets": [
+    0,
+    18,
+    36,
+    72
+  ],
+  "historical_budgets": [
+    0,
+    9,
+    18,
+    36,
+    72
+  ],
+  "demo_route": "original",
+  "demo_seed": 701,
+  "demo_execution_noise_deg": 2
+}

@@ -305,7 +305,7 @@ def run(config, output, config_path=None):
         "limitations": ["Artificial EPG direction labels; no recovered biological compass phases.",
                         "Each neural window resets to rest; no neural memory or intrinsic path integration.",
                         "External code integrates noisy turns and positions; return actuation is exact.",
-                        "One route, three seeds per noise; descriptive coursework results only.",
+                        f"One route, {len(config['trial_seeds'])} seeds per noise; descriptive coursework results only.",
                         "CX induced subgraph drops connections outside the annotated CX set."],
     }
     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

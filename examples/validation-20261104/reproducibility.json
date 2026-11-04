@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "tables_compared": 10,
+  "ablation_rows": 720,
+  "robustness_rows": 1440,
+  "old_normal_geometry_and_off_results_match": true,
+  "absolute_tolerance": 1e-10,
+  "relative_tolerance": 1e-10,
+  "scope": "Independent-process control replay from saved spikes and commands; no neural rerun"
+}

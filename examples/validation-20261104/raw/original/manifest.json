@@ -1,0 +1,35 @@
+{
+  "completed_at_utc": "2026-11-04T13:38:56.663222+00:00",
+  "upstream_commit": "91bdd1e7dcf193f3e7ca5a8933497fcef63b7960",
+  "source_sha256": {
+    "scripts/run_homing.py": "ea996cbe26b47f0da1498573d63afc8703dec9ac9463323ae848e1dda9dbc9fb",
+    "scripts/smoke_simulation.py": "ac3e534e88a4b55b7f991507973c041734da0bb9e1b1b923e94f6bed2c5e496c",
+    "outputs/homing/validation-20261104/original_input.json": "6694674442b7e6023dcda477ba976119c3c98811204dce8990f89a28678e6efb"
+  },
+  "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+  "saved_config_sha256": "6694674442b7e6023dcda477ba976119c3c98811204dce8990f89a28678e6efb",
+  "neural_gate_passed": true,
+  "calibration": {
+    "train_samples": 48,
+    "heldout_samples": 16,
+    "heldout_mae_deg": 4.24455919194248,
+    "heldout_median_deg": 3.3086258864510016,
+    "heldout_max_deg": 8.754984690009408,
+    "predeclared_mae_limit_deg": 30.0,
+    "passed": true,
+    "disconnected_feature_spikes": 0,
+    "disconnected_total_spikes_including_inputs": 948,
+    "test_angle_offset_deg": 11.25
+  },
+  "trial_rows": 110,
+  "wall_seconds": 35.52656196709722,
+  "max_rss_kib": 626400,
+  "geometry_sanity_passed": true,
+  "limitations": [
+    "Artificial EPG direction labels; no recovered biological compass phases.",
+    "Each neural window resets to rest; no neural memory or intrinsic path integration.",
+    "External code integrates noisy turns and positions; return actuation is exact.",
+    "One route, 10 seeds per noise; descriptive coursework results only.",
+    "CX induced subgraph drops connections outside the annotated CX set."
+  ]
+}

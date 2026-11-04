@@ -47,11 +47,12 @@ def contact_distance(position, heading, distance, radius):
     return float(np.clip(entry, 0.0, distance))
 
 
-def execute_return(position, heading, actions, radius):
+def execute_return(position, heading, actions, radius, *, turn_errors=None):
     """Environment executes the plan; contact terminates every method equally.
 
     No direction, distance or position observation is sent back to the plan.
-    Return actuation is exact, as in the original coursework experiment.
+    Optional angular errors are applied by the environment, never the planner.
+    The default retains exact actuation from the original experiment.
     """
     if not np.isfinite(radius) or radius <= 0:
         raise ValueError("Success radius must be positive and finite")
@@ -60,8 +61,17 @@ def execute_return(position, heading, actions, radius):
     travelled = search_distance = 0.0
     success = False
     stage = "budget_exhausted"
+    errors = iter(turn_errors) if turn_errors is not None else None
     for turn, requested, phase in actions:
-        heading = float(wrap(heading + turn))
+        error = 0.0
+        if errors is not None:
+            try:
+                error = float(next(errors))
+            except StopIteration as exc:
+                raise ValueError("Execution error sequence is shorter than the action plan") from exc
+            if not np.isfinite(error):
+                raise ValueError("Execution errors must be finite")
+        heading = float(wrap(heading + turn + error))
         contact = contact_distance(position, heading, requested, radius)
         actual = requested if contact is None else contact
         end = position + actual * np.array([np.cos(heading), np.sin(heading)])
