@@ -10,8 +10,10 @@ from matplotlib.patches import Circle
 import numpy as np
 import pandas as pd
 
-COLORS = {"geometric": "#2878a0", "cx_readout": "#d87828", "readout_off": "#b64c68"}
-LABELS = {"geometric": "Geometric integration", "cx_readout": "CX readout + integration", "readout_off": "Readout disabled"}
+COLORS = {"geometric": "#2878a0", "cx_readout": "#d87828", "readout_off": "#b64c68",
+          "cx_motion_average": "#36865e", "motion_average_off": "#8d61a5"}
+LABELS = {"geometric": "Geometric integration", "cx_readout": "Raw CX readout", "readout_off": "Readout disabled",
+          "cx_motion_average": "CX with temporal averaging", "motion_average_off": "Averaging with readout disabled"}
 
 
 def main():
@@ -35,7 +37,9 @@ def main():
         ax.scatter([0], [0], marker="*", s=100, color="#34464d", zorder=5, label="Home")
         ax.scatter([out.x.iloc[-1]], [out.y.iloc[-1]], marker="s", s=32, color="#687b61", zorder=5)
         ax.add_patch(Circle((0, 0), config["success_radius"], fill=False, color="#8b9a90", ls=":"))
-        for method in ["geometric", "cx_readout", "readout_off"]:
+        methods = ["geometric", "cx_readout", "cx_motion_average"]
+        methods.append("motion_average_off" if config.get("motion_compensated_average") else "readout_off")
+        for method in methods:
             back = sub[(sub.method == method) & (sub.phase == "return_true")]
             if back.empty:
                 continue
@@ -55,7 +59,8 @@ def main():
     plt.close(fig)
 
     fig, (ax, decoder_ax) = plt.subplots(1, 2, figsize=(11.8, 4.2), gridspec_kw={"width_ratios": [1.25, 1]})
-    for method, shift in [("geometric", -.28), ("cx_readout", .28)]:
+    shifts = [("geometric", -.4), ("cx_readout", 0), ("cx_motion_average", .4)]
+    for method, shift in shifts:
         sub = metrics[metrics.method == method]
         if sub.empty:
             continue
@@ -66,10 +71,11 @@ def main():
         for sigma, group in sub.groupby("noise_deg"):
             jitter = np.linspace(-.13, .13, len(group))
             ax.scatter(sigma + shift + jitter, group.endpoint_error, s=20, color=COLORS[method], alpha=.5)
-    off = metrics[metrics.method == "readout_off"]
+    off_method = "motion_average_off" if config.get("motion_compensated_average") else "readout_off"
+    off = metrics[metrics.method == off_method]
     if len(off):
-        ax.scatter(off.noise_deg.iloc[0], off.endpoint_error.mean(), marker="X", color=COLORS["readout_off"],
-                   s=75, label=LABELS["readout_off"], zorder=5)
+        ax.scatter(off.noise_deg.iloc[0], off.endpoint_error.mean(), marker="X", color=COLORS[off_method],
+                   s=75, label=LABELS[off_method], zorder=5)
     ax.axhline(config["success_radius"], color="#8b9a90", ls=":", lw=1.3, label="Success radius")
     ax.set_xticks(config["turn_noise_std_deg"])
     ax.set_xlabel("Std. dev. of incremental turn noise (degrees)")

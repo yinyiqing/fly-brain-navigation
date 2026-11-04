@@ -1,0 +1,34 @@
+{
+  "checked_at_utc": "2026-11-04T02:23:15.384606+00:00",
+  "file": "reports/数字果蝇归巢改进实验报告_排版版.docx",
+  "rendered_pages": 5,
+  "all_pages_visually_reviewed": true,
+  "reference_format_preserved": true,
+  "original_reports_preserved": true,
+  "checks": {
+    "reference_sha256": "6508f624032146a8554fddcb05e7c584c07ca9d4c5f346d05b757f118d1259c3",
+    "report_sha256": "381ad754abe131df72c998e2000d8067eabdf90063e6384443d653ea628d6cfa",
+    "original_reports_preserved": true,
+    "reference_section_unchanged": true,
+    "reference_existing_styles_unchanged": true,
+    "opaque_package_parts_preserved": true,
+    "table_matches_actual_summary": true,
+    "native_equation_preserved": true,
+    "figure_bytes_match_updated_results": true,
+    "changed_reference_parts": [
+      "docProps/core.xml",
+      "word/_rels/document.xml.rels",
+      "word/document.xml",
+      "word/media/image1.png",
+      "word/media/image2.png",
+      "word/media/image3.png",
+      "word/media/image4.png",
+      "word/media/image5.png",
+      "word/media/image6.png",
+      "word/media/image7.png",
+      "word/media/image8.png",
+      "word/media/image9.png",
+      "word/styles.xml"
+    ]
+  }
+}

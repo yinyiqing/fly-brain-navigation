@@ -1,0 +1,18 @@
+{
+  "first": "window1000-20261104",
+  "repeat": "window1000-repeat-20261104",
+  "same_environment": true,
+  "checks": {
+    "config.json": "byte-identical",
+    "metrics.csv": "byte-identical",
+    "summary.csv": "byte-identical",
+    "observations.csv": "byte-identical",
+    "trajectories.csv": "byte-identical",
+    "calibration_summary.json": "byte-identical",
+    "neural_mapping.json": "byte-identical",
+    "readout.npz": "array-identical",
+    "calibration.npz": "array-identical",
+    "navigation_counts.npz": "array-identical"
+  },
+  "passed": true
+}

@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from run_homing import decode, evaluate_return, fit_readout, home_command, integrate, observe_turns, wrap
+from run_homing import decode, evaluate_return, fit_readout, home_command, integrate, motion_average, observe_turns, wrap
 
 
 class HomingTests(unittest.TestCase):
@@ -40,6 +40,29 @@ class HomingTests(unittest.TestCase):
         raw = np.column_stack([10 + 8 * np.cos(test), 10 + 8 * np.sin(test)])
         np.testing.assert_allclose(wrap(decode(raw, readout) - test), 0, atol=1e-12)
         self.assertGreater(float(np.std(wrap(decode(np.zeros_like(raw), readout) - test))), 1)
+
+    def test_motion_average_tracks_exact_turns_across_angle_boundary(self):
+        headings = np.deg2rad([170, -170, -80, 80, -175])
+        turns = wrap(np.diff(np.r_[0., headings]))
+        np.testing.assert_allclose(wrap(motion_average(headings, turns) - headings), 0, atol=1e-12)
+
+    def test_motion_average_is_circular_and_reduces_opposed_small_errors(self):
+        result = motion_average(np.deg2rad([179, -179]), np.zeros(2))
+        self.assertLess(abs(float(wrap(result[-1] - np.pi))), 1e-12)
+
+    def test_motion_average_is_causal_and_retains_neural_information(self):
+        turns = np.deg2rad([0, 45, -20, 100])
+        readouts = np.deg2rad([12, 60, 30, 140])
+        result = motion_average(readouts, turns)
+        np.testing.assert_allclose(result[:2], motion_average(readouts[:2], turns[:2]), atol=1e-12)
+        changed = motion_average(readouts + .2, turns)
+        np.testing.assert_allclose(wrap(changed - result), .2, atol=1e-12)
+
+    def test_motion_average_handles_cancellation_and_rejects_shape_mismatch(self):
+        result = motion_average(np.array([0., np.pi]), np.zeros(2))
+        self.assertLess(abs(float(wrap(result[-1] - np.pi))), 1e-12)
+        with self.assertRaises(ValueError):
+            motion_average(np.zeros(3), np.zeros(2))
 
 
 if __name__ == "__main__":

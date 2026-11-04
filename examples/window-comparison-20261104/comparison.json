@@ -1,0 +1,76 @@
+{
+  "original_seeds": {
+    "seeds": [
+      7,
+      21,
+      42
+    ],
+    "observations_identical": true,
+    "geometric_results_identical": true,
+    "only_window_differs": true,
+    "short": {
+      "results_directory": "coursework-20261103",
+      "heldout_mae_deg": 4.24455919194248,
+      "wall_seconds": 19.242718991823494,
+      "max_rss_kib": 610488,
+      "sha256": {
+        "config.json": "5905b35ff0c63481047593266b0b86ae7e424bda9df4aa5d7e639731f5e7cfc7",
+        "metrics.csv": "b26a137df8406f65c903431dd4ce0c319a9b3d7bb3ac6313a2af060e5d71cd4f",
+        "observations.csv": "79cf4e10ac79c0d309e6bea8ab581b4a2b6e274a255f581398979dd06a009c85",
+        "calibration.npz": "427a4d5d1fe9fb157f35980aa2a86c359b11d3f801536a7f355c9e4f86202780"
+      }
+    },
+    "long": {
+      "results_directory": "window1000-20261104",
+      "heldout_mae_deg": 3.795861759106638,
+      "wall_seconds": 42.770646563963965,
+      "max_rss_kib": 620920,
+      "sha256": {
+        "config.json": "3af9b88c29cfb602e7d38454d1ac15ebb7741be6f8dcadca369af0f18b3619c3",
+        "metrics.csv": "5a84e42dac13a697347ea218495a9456c341693d0a304cf42540ba92c4e32450",
+        "observations.csv": "79cf4e10ac79c0d309e6bea8ab581b4a2b6e274a255f581398979dd06a009c85",
+        "calibration.npz": "c78fe97629e71d054c8ddeaac768bf38a78ac9eff1816a3e6621fba54479a992"
+      }
+    }
+  },
+  "new_seeds": {
+    "seeds": [
+      101,
+      202,
+      303
+    ],
+    "observations_identical": true,
+    "geometric_results_identical": true,
+    "only_window_differs": true,
+    "short": {
+      "results_directory": "confirm250-20261104",
+      "heldout_mae_deg": 4.24455919194248,
+      "wall_seconds": 13.881403889041394,
+      "max_rss_kib": 621516,
+      "sha256": {
+        "config.json": "2ed34c1e08e88c99731ef75e42ba81a163472655925652a9ba4d1d2f635d3188",
+        "metrics.csv": "17ce048476b9f56c40de91eed68f3b84ea1c23f669fe483c28fe0d135df99cdf",
+        "observations.csv": "d9d9102ca5e6158f42137dc4286d984d25276cc75d79e22be29401ce69c025cc",
+        "calibration.npz": "427a4d5d1fe9fb157f35980aa2a86c359b11d3f801536a7f355c9e4f86202780"
+      }
+    },
+    "long": {
+      "results_directory": "confirm1000-20261104",
+      "heldout_mae_deg": 3.795861759106638,
+      "wall_seconds": 40.21729340101592,
+      "max_rss_kib": 622228,
+      "sha256": {
+        "config.json": "82286b3218e6ca01d5a910f5bf6d657a84ed8879da44baecf37cacb41ae84a32",
+        "metrics.csv": "063efd24a16890a6fb3be60fbd939b761df5c615be5d3324cfe4b660f94d3d1b",
+        "observations.csv": "d9d9102ca5e6158f42137dc4286d984d25276cc75d79e22be29401ce69c025cc",
+        "calibration.npz": "c78fe97629e71d054c8ddeaac768bf38a78ac9eff1816a3e6621fba54479a992"
+      }
+    }
+  },
+  "limitations": [
+    "One fixed route; descriptive comparisons only.",
+    "Primary seeds were inspected before this change; confirmation uses separate navigation seeds.",
+    "Calibration and held-out direction seeds are shared across the two seed groups, not new tests.",
+    "Longer simulated observations cost more time; external integration and ideal actuation remain."
+  ]
+}

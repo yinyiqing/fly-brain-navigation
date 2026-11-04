@@ -1,0 +1,12 @@
+{
+  "train_samples": 48,
+  "heldout_samples": 16,
+  "heldout_mae_deg": 4.24455919194248,
+  "heldout_median_deg": 3.3086258864510016,
+  "heldout_max_deg": 8.754984690009408,
+  "predeclared_mae_limit_deg": 30.0,
+  "passed": true,
+  "disconnected_feature_spikes": 0,
+  "disconnected_total_spikes_including_inputs": 948,
+  "test_angle_offset_deg": 11.25
+}

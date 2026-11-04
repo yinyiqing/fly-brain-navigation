@@ -90,6 +90,26 @@ def decode(features, readout):
     return np.arctan2(xy[..., 1], xy[..., 0])
 
 
+def motion_average(headings, measured_turns):
+    """Causal circular mean after transporting past readouts by observed turns.
+
+    This is external readout processing, not neural memory. Neither true
+    headings, positions nor future observations enter this function.
+    """
+    headings = np.asarray(headings, dtype=float)
+    measured_turns = np.asarray(measured_turns, dtype=float)
+    if headings.ndim != 1 or headings.shape != measured_turns.shape:
+        raise ValueError("Headings and measured turns must be matching 1-D arrays")
+    result = np.empty_like(headings)
+    accumulated = 0j
+    for step, (heading, turn) in enumerate(zip(headings, measured_turns)):
+        accumulated = accumulated * np.exp(1j * turn) + np.exp(1j * heading)
+        # Opposed readings have no defined circular mean; retain the current
+        # neural reading rather than substituting a geometric/true direction.
+        result[step] = heading if abs(accumulated) < 1e-12 else np.angle(accumulated)
+    return wrap(result)
+
+
 class CXEncoder:
     """Artificial EPG rate code -> real signed CX connections -> non-EPG counts."""
 
@@ -199,7 +219,7 @@ def calibrate(encoder, config, output):
     return readout, report
 
 
-def run(config, output):
+def run(config, output, config_path=None):
     started = time.perf_counter()
     output.mkdir(parents=True, exist_ok=False)
     (output / "config.json").write_text(json.dumps(config, indent=2) + "\n")
@@ -229,10 +249,14 @@ def run(config, output):
                 counts = np.array([encoder.response(theta, 20000 + seed * 100 + k)[0]
                                    for k, theta in enumerate(measured_headings)])
                 methods["cx_readout"] = decode(counts, readout)
+                if config.get("motion_compensated_average", False):
+                    methods["cx_motion_average"] = motion_average(methods["cx_readout"], measured_turns)
                 neural_counts.append(counts)
                 if sigma == middle_noise:
                     # Counterfactual replay of the same outbound inputs with readout disabled.
                     methods["readout_off"] = decode(np.zeros_like(counts), readout)
+                    if config.get("motion_compensated_average", False):
+                        methods["motion_average_off"] = motion_average(methods["readout_off"], measured_turns)
             for k, (turn, angle) in enumerate(zip(measured_turns, measured_headings)):
                 observations.append({"noise_deg": sigma, "seed": seed, "step": k,
                                      "measured_turn_rad": float(turn), "estimated_yaw_rad": float(angle),
@@ -262,11 +286,18 @@ def run(config, output):
     zero = metrics[(metrics.method == "geometric") & (metrics.noise_deg == 0)]
     assert len(zero) and float(zero.endpoint_error.max()) < 1e-9, "Noiseless geometry must return exactly"
     assert np.isfinite(metrics.select_dtypes(include=[np.number]).to_numpy()).all()
-    source_hashes = {str(q.relative_to(ROOT)): hashlib.sha256(q.read_bytes()).hexdigest()
-                     for q in [Path(__file__), ROOT / "scripts/smoke_simulation.py", ROOT / "configs/homing.json"]}
+    source_files = [Path(__file__), ROOT / "scripts/smoke_simulation.py"]
+    if config_path is not None:
+        source_files.append(config_path.resolve())
+    source_hashes = {
+        str(q.relative_to(ROOT) if q.is_relative_to(ROOT) else q):
+            hashlib.sha256(q.read_bytes()).hexdigest()
+        for q in source_files
+    }
     manifest = {
         "completed_at_utc": datetime.now(timezone.utc).isoformat(), "upstream_commit": commit,
         "source_sha256": source_hashes, "python": sys.version,
+        "saved_config_sha256": hashlib.sha256((output / "config.json").read_bytes()).hexdigest(),
         "neural_gate_passed": calibration["passed"], "calibration": calibration,
         "trial_rows": len(metrics), "wall_seconds": time.perf_counter() - started,
         "max_rss_kib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
@@ -288,4 +319,4 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     destination = args.output or ROOT / "outputs/homing" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run(json.loads(args.config.read_text()), destination)
+    run(json.loads(args.config.read_text()), destination, args.config)

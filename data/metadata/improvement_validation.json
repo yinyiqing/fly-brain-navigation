@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-04",
+  "unit_tests_passed": 8,
+  "original_metrics_unchanged": true,
+  "original_observations_unchanged": true,
+  "original_readout_and_spike_counts_unchanged": true,
+  "long_window_reproduction_passed": true,
+  "motion_average_reproduction_passed": true,
+  "primary_seeds": [
+    7,
+    21,
+    42
+  ],
+  "confirmation_seeds": [
+    401,
+    402,
+    403
+  ],
+  "uses_true_state_in_controller": false,
+  "source_sha256": {
+    "scripts/run_homing.py": "33b61c680f5b9a73336a2056c450c7b3e94e5c6fb08cddddc57a4cbf1c77abf3",
+    "tests/test_homing.py": "52f85a18a0bd6f3834151125ca6861251552f98bc42045aab949bbb45959d509",
+    "configs/homing_motion_average.json": "bbb8500887397ccd32829e59ff086e96e65f1762b5075adc10c731d7bf2b7035",
+    "configs/homing_motion_confirm.json": "d4945d4259955cda19049b1ad018e24b2608c8b3eefff2241a12c5e3b44f024a"
+  }
+}

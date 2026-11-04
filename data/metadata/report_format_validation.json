@@ -1,0 +1,29 @@
+{
+  "checked_at_utc": "2026-11-03T13:05:46.701980+00:00",
+  "file": "reports/数字果蝇归巢课程报告_排版版.docx",
+  "reference_file": "多元时序预测实验报告_24025110_尹一清.docx",
+  "rendered_pages": 5,
+  "all_pages_visually_reviewed": true,
+  "original_report_preserved": true,
+  "visible_text_changes": [
+    "Author and student ID from supplied reference",
+    "Section numbering changed to Chinese numerals"
+  ],
+  "layout_adaptations": [
+    "Disable paragraph grid snapping so explicit line spacing is applied",
+    "Fit existing composite figures to reference text width",
+    "Keep discussion opening and figure-caption pairs together"
+  ],
+  "checks": {
+    "reference_sha256": "6508f624032146a8554fddcb05e7c584c07ca9d4c5f346d05b757f118d1259c3",
+    "original_sha256": "86ead5ca0d5e03c2ab7378f4876029186a46d11129f78bf2e1b8bac15a29c216",
+    "final_sha256": "617a6a2d39dd0ddebb05d29a7ea06e7ebe90162127b35df10ad90f99f81f1c2a",
+    "preserve_only_parts_unchanged": true,
+    "reference_section_unchanged": true,
+    "existing_reference_styles_unchanged": true,
+    "scientific_text_preserved": true,
+    "table_values_preserved": true,
+    "figure_bytes_preserved": true,
+    "native_equation_preserved": true
+  }
+}

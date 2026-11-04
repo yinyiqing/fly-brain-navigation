@@ -1,0 +1,38 @@
+{
+  "route": {
+    "headings_deg": [
+      0,
+      60,
+      145,
+      50
+    ],
+    "lengths": [
+      6,
+      5,
+      4,
+      3
+    ],
+    "samples_per_segment": 5
+  },
+  "turn_noise_std_deg": [
+    0,
+    5,
+    15
+  ],
+  "trial_seeds": [
+    101,
+    202,
+    303
+  ],
+  "success_radius": 1.0,
+  "neural": {
+    "window_ms": 250,
+    "input_min_hz": 15,
+    "input_max_hz": 150,
+    "feature_count": 128,
+    "training_directions": 16,
+    "training_repeats": 3,
+    "ridge_alpha": 10.0,
+    "heldout_mae_limit_deg": 30.0
+  }
+}
