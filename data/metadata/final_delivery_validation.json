@@ -1,0 +1,25 @@
+{
+  "artifact": "reports/数字果蝇归巢研究_24025110_尹一清.docx",
+  "sha256": "c92051416ee5bf780ed349a14092743621ca914df3c7b7b38c9a9be8ae74c6c1",
+  "reference_sha256": "6508f624032146a8554fddcb05e7c584c07ca9d4c5f346d05b757f118d1259c3",
+  "reference_unchanged": true,
+  "section_properties_unchanged": true,
+  "preserved_package_parts_unchanged": 13,
+  "rendered_pages": 5,
+  "all_pages_visually_inspected": true,
+  "renderer": "Bundled LibreOffice, task-local SimSun to Songti SC font fallback",
+  "packaged_source_checks": {
+    "unit_tests_passed": 20,
+    "baseline_navigation_replay": true,
+    "validation_tables_replayed": 10,
+    "ablation_rows": 720,
+    "robustness_rows": 1440,
+    "neural_rerun": false
+  },
+  "offline_preview_checks": {
+    "local_link_references_resolved": 16,
+    "gif_frames_decoded": 135,
+    "browser_visual_check": "Not performed: browser tool disallowed the local file URL."
+  },
+  "export_method": "Pinned Git archive with per-file SHA-256 manifest; destination must not exist."
+}
