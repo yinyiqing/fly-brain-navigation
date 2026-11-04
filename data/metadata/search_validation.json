@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-04",
+  "unit_tests_passed_local": 14,
+  "unit_tests_passed_server": 14,
+  "previous_neural_runner_unchanged": true,
+  "run_source_hashes_match": true,
+  "trajectory_distances_and_endpoints_match": true,
+  "success_radius": 1.0,
+  "search_budget_respected": true,
+  "navigation_replay_passed": true,
+  "neural_rerun_for_reproduction_performed": false,
+  "neural_trial_combinations": 45,
+  "method_result_rows": 210,
+  "predeclared_targets": {
+    "zero_noise_15_of_15": true,
+    "low_noise_at_least_12_of_15": true
+  },
+  "added_assumption": "Binary goal-contact termination; no target bearing or coordinates supplied to the planner",
+  "source_sha256": {
+    "scripts/run_search_homing.py": "8bd7596a14de6a0dcdb2a6f61357b4943b8b9692a13940742420cae2f79b3318",
+    "tests/test_search_homing.py": "c7209d25e6cfe4f7b678cbb12d6c9b704288e0b53820d2bf427bb47e05554131",
+    "configs/homing_search.json": "03d85d93a579a237c3ea09b749f2c2b52d0e2dae0f23e72808cb6e4920472f07"
+  }
+}

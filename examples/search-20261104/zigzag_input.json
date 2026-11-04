@@ -1,0 +1,41 @@
+{
+  "route": {
+    "headings_deg": [
+      30,
+      -55,
+      70,
+      160
+    ],
+    "lengths": [
+      4,
+      5,
+      5,
+      4
+    ],
+    "samples_per_segment": 5
+  },
+  "turn_noise_std_deg": [
+    0,
+    5,
+    15
+  ],
+  "trial_seeds": [
+    601,
+    602,
+    603,
+    604,
+    605
+  ],
+  "success_radius": 1.0,
+  "motion_compensated_average": true,
+  "neural": {
+    "window_ms": 250,
+    "input_min_hz": 15,
+    "input_max_hz": 150,
+    "feature_count": 128,
+    "training_directions": 16,
+    "training_repeats": 3,
+    "ridge_alpha": 10.0,
+    "heldout_mae_limit_deg": 30.0
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "baseline_config": "configs/homing_motion_average.json",
+  "trial_seeds": [
+    601,
+    602,
+    603,
+    604,
+    605
+  ],
+  "turn_noise_std_deg": [
+    0,
+    5,
+    15
+  ],
+  "success_radius": 1.0,
+  "search_spacing": 1.5,
+  "search_distance_budget": 72.0,
+  "routes": [
+    {
+      "name": "original",
+      "route": {
+        "headings_deg": [
+          0,
+          60,
+          145,
+          50
+        ],
+        "lengths": [
+          6,
+          5,
+          4,
+          3
+        ],
+        "samples_per_segment": 5
+      }
+    },
+    {
+      "name": "zigzag",
+      "route": {
+        "headings_deg": [
+          30,
+          -55,
+          70,
+          160
+        ],
+        "lengths": [
+          4,
+          5,
+          5,
+          4
+        ],
+        "samples_per_segment": 5
+      }
+    },
+    {
+      "name": "curve",
+      "route": {
+        "headings_deg": [
+          -30,
+          -21,
+          -12,
+          -3,
+          6,
+          15,
+          24,
+          33,
+          42,
+          51,
+          60,
+          69,
+          78,
+          87,
+          96,
+          105,
+          114,
+          123,
+          132,
+          141
+        ],
+        "lengths": [
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9
+        ],
+        "samples_per_segment": 1
+      }
+    }
+  ]
+}

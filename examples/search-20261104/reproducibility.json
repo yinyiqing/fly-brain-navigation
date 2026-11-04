@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "scope": "Navigation replay from saved neural return commands; not a neural rerun",
+  "absolute_tolerance": 1e-12,
+  "relative_tolerance": 1e-12,
+  "trial_rows": 210,
+  "trajectory_rows": 16975
+}

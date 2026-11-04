@@ -1,0 +1,22 @@
+{
+  "completed_at_utc": "2026-11-04T03:17:45.205387+00:00",
+  "source_sha256": {
+    "scripts/run_search_homing.py": "8bd7596a14de6a0dcdb2a6f61357b4943b8b9692a13940742420cae2f79b3318",
+    "scripts/run_homing.py": "33b61c680f5b9a73336a2056c450c7b3e94e5c6fb08cddddc57a4cbf1c77abf3",
+    "configs/homing_search.json": "03d85d93a579a237c3ea09b749f2c2b52d0e2dae0f23e72808cb6e4920472f07",
+    "configs/homing_motion_average.json": "bbb8500887397ccd32829e59ff086e96e65f1762b5075adc10c731d7bf2b7035",
+    "docs/search_homing_plan.md": "12447bc21396a3f2a31855713f156df952622804dcb3c96ffee7ccb4f946d4e2"
+  },
+  "wall_seconds": 60.52752912091091,
+  "trial_rows": 210,
+  "predeclared_targets": {
+    "zero_noise_15_of_15": true,
+    "low_noise_at_least_12_of_15": true
+  },
+  "limitations": [
+    "Binary goal-contact termination is an added task assumption.",
+    "Search is an external controller, not learned neural behavior.",
+    "Return actuation is exact; no additional motion noise or obstacles.",
+    "Fifteen trials per noise level are a small descriptive course experiment."
+  ]
+}
