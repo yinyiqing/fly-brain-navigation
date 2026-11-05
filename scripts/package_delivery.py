@@ -16,7 +16,7 @@ import subprocess
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-PAPER = "数字果蝇归巢研究_24025110_尹一清.docx"
+PAPER = "果蝇连接组方向读出与归巢验证_24025110_尹一清.docx"
 
 
 def git(*args):
