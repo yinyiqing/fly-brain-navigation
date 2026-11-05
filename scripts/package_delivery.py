@@ -11,7 +11,6 @@ import hashlib
 import io
 import json
 from pathlib import Path
-import shutil
 import subprocess
 import zipfile
 
@@ -29,43 +28,61 @@ def export(output, revision):
     tree_id = git("rev-parse", f"{object_id}^{{tree}}").decode().strip()
     kind = git("cat-file", "-t", object_id).decode().strip()
     archive = zipfile.ZipFile(io.BytesIO(git("archive", "--format=zip", object_id)))
-    required = [f"reports/{PAPER}", "reports/assets/paper_direction_readout.png",
-                "reports/assets/paper_direction_readout.pdf", "reports/assets/paper_trajectory.pdf",
-                "examples/validation-20261104/robustness_summary.csv"]
-    for name in required:
-        if name not in archive.namelist():
-            raise ValueError(f"Not present in revision {revision}: {name}")
-    output.mkdir(parents=True, exist_ok=False)
-    source = output / "04_完整项目"
-    source.mkdir()
-    for entry in archive.infolist():
-        path = Path(entry.filename)
-        if path.is_absolute() or ".." in path.parts:
-            raise ValueError(f"Invalid archive path: {entry.filename}")
-        archive.extract(entry, source)
-
-    def copy(relative, destination):
-        target = output / destination
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source / relative, target)
-
-    copy(f"reports/{PAPER}", f"01_论文/{PAPER}")
     results = "examples/validation-20261104"
     figures = [("reports/assets/paper_direction_readout", "图1_方向放电与读出"),
                ("reports/assets/paper_trajectory", "补图S1_出发返程与搜索"),
                (f"{results}/figure1_neural_controls", "补图S2_神经方向对照"),
                (f"{results}/figure2_return_robustness", "补图S3_返程执行误差"),
                (f"{results}/figure3_budget_tradeoff", "补图S4_搜索预算与代价")]
+    required = [f"reports/{PAPER}", "docs/paper_figures.md", "docs/paper_supplement.md",
+                "docs/final_delivery.md", f"{results}/robustness_summary.csv"]
+    required += [f"{stem}.{suffix}" for stem, _ in figures for suffix in ("png", "pdf")]
+    for name in required:
+        if name not in archive.namelist():
+            raise ValueError(f"Not present in revision {revision}: {name}")
+    for entry in archive.infolist():
+        path = Path(entry.filename)
+        if path.is_absolute() or ".." in path.parts:
+            raise ValueError(f"Invalid archive path: {entry.filename}")
+    output.mkdir(parents=True, exist_ok=False)
+
+    # Keep one paper in the delivery; the reproducibility archive holds code
+    # and data, without duplicate reports or obsolete demonstration media.
+    excluded = []
+    source_files = 0
+    with zipfile.ZipFile(output / "04_代码与数据.zip", "w", zipfile.ZIP_DEFLATED) as source:
+        for entry in archive.infolist():
+            if entry.is_dir():
+                continue
+            path = Path(entry.filename)
+            if path.parts[0] == "reports" or path.suffix.lower() in {".docx", ".gif"} or path.name == "demo_final_frame.png":
+                excluded.append(entry.filename)
+                continue
+            data = archive.read(entry)
+            if entry.filename == "README.md":
+                readme = data.decode("utf-8")
+                readme = readme.replace(f"](reports/{PAPER})", f"](../01_论文/{PAPER})")
+                readme = readme.replace(
+                    "reports/assets/paper_direction_readout.png",
+                    "../02_论文插图/图1_方向放电与读出.png")
+                readme = readme.replace(
+                    "reports/assets/paper_trajectory.png",
+                    "../02_论文插图/补图S1_出发返程与搜索.png")
+                data = readme.encode("utf-8")
+            source.writestr(f"代码与数据/{entry.filename}", data)
+            source_files += 1
+
+    def copy(relative, destination):
+        target = output / destination
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(archive.read(relative))
+
+    copy(f"reports/{PAPER}", f"01_论文/{PAPER}")
     for source_stem, destination_stem in figures:
         for suffix in ["png", "pdf"]:
             copy(f"{source_stem}.{suffix}", f"02_论文插图/{destination_stem}.{suffix}")
     copy("docs/paper_figures.md", "02_论文插图/图注与插图说明.md")
-    copy(f"{results}/homing_demo.gif", "03_结果数据/补充演示/归巢演示_旧版.gif")
-    copy(f"{results}/demo_final_frame.png", "03_结果数据/补充演示/轨迹终帧_旧版.png")
-    for path in sorted((source / results).glob("*.csv")):
-        copy(f"{results}/{path.name}", f"03_结果数据/数据表/{path.name}")
-    copy("docs/validation_results.md", "03_结果数据/实验结果说明.md")
-    copy("docs/paper_supplement.md", "03_结果数据/论文补充材料.md")
+    copy("docs/paper_supplement.md", "03_补充材料/论文补充材料.md")
     copy("docs/final_delivery.md", "00_阅读说明.md")
 
     files = sorted(p for p in output.rglob("*") if p.is_file())
@@ -76,11 +93,13 @@ def export(output, revision):
         "source_object_type": kind,
         "source_tree": tree_id,
         "presentation": "Static paper figures in PNG and PDF; no HTML entry point",
-        "note": "Tracked source snapshot; no Git history, environments or downloaded raw datasets. Hashes exclude this manifest.",
+        "note": "Pinned code/data archive; report files, duplicate figures and old demonstration media are excluded. The README links point to the separately delivered paper and figures. No Git history, environments or downloaded raw datasets. Hashes exclude this manifest.",
+        "source_files_in_archive": source_files,
+        "source_exclusions": excluded,
         "files": {str(p.relative_to(output)): hashlib.sha256(p.read_bytes()).hexdigest()
                   for p in files},
     }
-    (output / "版本与文件校验.json").write_text(
+    (output / "03_补充材料/版本与文件校验.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"output": str(output), "source_revision": object_id,
                       "files": len(files) + 1}, ensure_ascii=False))
