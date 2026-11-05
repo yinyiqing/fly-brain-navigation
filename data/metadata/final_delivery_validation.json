@@ -1,6 +1,6 @@
 {
   "artifact": "reports/果蝇连接组方向读出与归巢验证_24025110_尹一清.docx",
-  "sha256": "b1c28af808b021a908951f44d132b82fa9ec175881b4ddb60a5410362b8cce20",
+  "sha256": "42c902c60998aa76a0c603e022cd0b16be7e34b68dccf8d5c000b2e711acab4e",
   "reference_sha256": "6508f624032146a8554fddcb05e7c584c07ca9d4c5f346d05b757f118d1259c3",
   "reference_unchanged": true,
   "section_properties_unchanged": true,
@@ -41,7 +41,9 @@
     "image_sha256": "c7d583e7ee64fa529ae973d84faf10bf61dcc0a2967865a27f1f1c63c7725d26",
     "pdf_sha256": "f09bc4608ee8772718455ef6499aa3a84550dc24bfccf4a912439f765bbe51fe",
     "report_pages_after_update": 5,
-    "all_report_pages_visually_checked_after_update": true
+    "all_report_pages_visually_checked_after_update": true,
+    "embedded_in_current_report": false,
+    "delivery_location": "02_论文插图/图1_出发返程与搜索.png and .pdf"
   },
   "direction_readout_revision": {
     "research_focus": "Artificial direction encoding and external trained readout; homing as application validation",
@@ -65,5 +67,41 @@
     "report_tables": 2,
     "budget_results_retained_in_text_and_supplement": true,
     "all_five_pages_visually_inspected": true
+  },
+  "content_expansion_revision": {
+    "previous_revision": "32bd08206df507bdce921f25c093a7783a305c35",
+    "previous_report_sha256": "b1c28af808b021a908951f44d132b82fa9ec175881b4ddb60a5410362b8cce20",
+    "old_text_counts": {
+      "paragraph_characters": 3149,
+      "chinese_characters": 1733,
+      "method_characters": 563
+    },
+    "new_text_counts": {
+      "paragraph_characters": 3665,
+      "chinese_characters": 2165,
+      "method_characters": 995
+    },
+    "expanded_topics": [
+      "Artificial direction encoding",
+      "Spike-count features",
+      "48 supervised training samples",
+      "Ridge squared-error objective and regularization",
+      "Circular direction representation and atan2 readout",
+      "Observation error propagation and search cost"
+    ],
+    "native_math_elements": 4,
+    "paper_tables": 2,
+    "label_shuffle_table": "Per-column ranges of five saved permutations; full rows retained in supplementary results",
+    "all_table_numeric_cells_match_saved_csv": true,
+    "calibration_dimensions_and_saved_mae_verified": true,
+    "input_formula_matches_simulation": true,
+    "experiment_data_and_algorithms_unchanged": true,
+    "new_experiments_run": false,
+    "neural_simulation_rerun": false,
+    "section_and_styles_unchanged": true,
+    "body_font_size_half_points": 24,
+    "all_five_pages_visually_inspected": true,
+    "trajectory_figure": "Unchanged static supplement",
+    "writing": "Explain performed methods and findings directly; consolidate scope statement in discussion"
   }
 }
