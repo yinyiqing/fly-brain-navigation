@@ -1,6 +1,6 @@
 {
   "artifact": "reports/果蝇连接组方向读出与归巢验证_24025110_尹一清.docx",
-  "sha256": "f8bf53c5d6b7f9c1fe7983987bd78bb48383a9f61a5aa2d9aaf3611646a9c60a",
+  "sha256": "ac2d67998a8e0b01a80b9a9e54405de7fc4a2847715e557cbae60983e0ebaecb",
   "reference_sha256": "6508f624032146a8554fddcb05e7c584c07ca9d4c5f346d05b757f118d1259c3",
   "reference_unchanged": true,
   "section_properties_unchanged": true,
@@ -199,5 +199,34 @@
     "new_experiments_run": false,
     "neural_simulation_rerun": false,
     "previous_report_preserved_in_task_cache_and_git": true
+  },
+  "paragraph_coherence_revision": {
+    "previous_revision": "3104b9479070d6f0474791d238bc7350db7afe31",
+    "previous_report_sha256": "f8bf53c5d6b7f9c1fe7983987bd78bb48383a9f61a5aa2d9aaf3611646a9c60a",
+    "report_sha256": "ac2d67998a8e0b01a80b9a9e54405de7fc4a2847715e557cbae60983e0ebaecb",
+    "only_changed_docx_part": "word/document.xml",
+    "all_other_docx_parts_preserved": true,
+    "native_math_elements": 4,
+    "tables": 2,
+    "embedded_figures": 1,
+    "tables_equations_section_and_drawing_xml_unchanged": true,
+    "reference_and_all_figures_unchanged": true,
+    "implementation_details_retained_in_supplement": true,
+    "scientific_sources_and_algorithms_unchanged": true,
+    "rendered_pages": 5,
+    "all_pages_visually_inspected": true,
+    "paragraph_logic_reviewed": true,
+    "new_experiments_run": false,
+    "writing_skill": "humanizer-zh",
+    "user_feedback": "Individual terms are understood but paragraph connections are unclear",
+    "organization": [
+      "Direction converted to stimulation",
+      "Spike counts become one labelled sample",
+      "Ridge regression learns direction components",
+      "Trained readout supplies navigation directions",
+      "External controller estimates position and return actions"
+    ],
+    "body_font_size_half_points": 24,
+    "supplement": "docs/paper_supplement.md"
   }
 }
