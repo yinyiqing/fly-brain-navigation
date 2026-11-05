@@ -55,7 +55,10 @@ def export(output, revision):
             if entry.is_dir():
                 continue
             path = Path(entry.filename)
-            if path.parts[0] == "reports" or path.suffix.lower() in {".docx", ".gif"} or path.name == "demo_final_frame.png":
+            report_asset_needed = entry.filename == "reports/assets/paper_direction_readout.png"
+            if ((path.parts[0] == "reports" and not report_asset_needed)
+                    or path.suffix.lower() in {".docx", ".gif"}
+                    or path.name == "demo_final_frame.png"):
                 excluded.append(entry.filename)
                 continue
             data = archive.read(entry)
@@ -93,7 +96,7 @@ def export(output, revision):
         "source_object_type": kind,
         "source_tree": tree_id,
         "presentation": "Static paper figures in PNG and PDF; no HTML entry point",
-        "note": "Pinned code/data archive; report files, duplicate figures and old demonstration media are excluded. The README links point to the separately delivered paper and figures. No Git history, environments or downloaded raw datasets. Hashes exclude this manifest.",
+        "note": "Pinned code/data archive; the figure required to rebuild the paper is retained. Word reports, other report figures and old demonstration media are excluded. README links point to the separately delivered paper and figures. No Git history, environments or downloaded raw datasets. Hashes exclude this manifest.",
         "source_files_in_archive": source_files,
         "source_exclusions": excluded,
         "files": {str(p.relative_to(output)): hashlib.sha256(p.read_bytes()).hexdigest()
