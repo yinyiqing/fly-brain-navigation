@@ -6,15 +6,15 @@
 
 | 实验 | 回答的问题 | 证据位置 |
 | --- | --- | --- |
-| 未见方向测试 | 放电特征能否恢复训练方向之间的连续角度 | `decoder_controls.csv`、保存的 `calibration.npz` |
+| 未见方向测试 | 放电特征能否恢复训练方向之间的连续角度 | 正文图一、`decoder_controls.csv`、保存的 `calibration.npz` |
 | 标签置换 | 正确方向标签如何影响读出与归巢 | `decoder_controls.csv`、`ablation_by_variant.csv` |
-| 断开 CX 连接 | 所选下游响应是否依赖连接传播 | `examples/search-20261104/raw/original/calibration_summary.json` |
+| 0° 输入下断开 CX 连接 | 该输入下的所选下游响应是否依赖连接传播 | `examples/search-20261104/raw/original/calibration_summary.json` |
 | 关闭读出 | 方向信息在归巢中有什么作用 | `ablation_by_variant.csv` |
 | 多路线与执行误差 | 方向读出在不同运动条件下能否用于归巢 | `robustness_summary.csv` |
 | 搜索预算 | 到达次数如何随可用行走路程变化 | `robustness_summary.csv`、`figure3_budget_tradeoff.pdf` |
 | 几何基线 | 同一份运动观测直接用于位置积分时表现如何 | `robustness_summary.csv` |
 
-表中未写目录的验证文件位于 `examples/validation-20261104/`。完整置换表和预算表见 `docs/validation_results.md`。四张静态图的说明见 `docs/paper_figures.md`。
+表中未写目录的验证文件位于 `examples/validation-20261104/`。完整置换表和预算表见 `docs/validation_results.md`。正文图一和补图 S1–S4 的说明见 `docs/paper_figures.md`。
 
 ## 返程路程差异的计算
 

@@ -1,6 +1,6 @@
 {
   "artifact": "reports/果蝇连接组方向读出与归巢验证_24025110_尹一清.docx",
-  "sha256": "6b02c4b833246b67d4e631bac6e0a56306dbc1cc5c87404c47e002f7b009a1dd",
+  "sha256": "f8bf53c5d6b7f9c1fe7983987bd78bb48383a9f61a5aa2d9aaf3611646a9c60a",
   "reference_sha256": "6508f624032146a8554fddcb05e7c584c07ca9d4c5f346d05b757f118d1259c3",
   "reference_unchanged": true,
   "section_properties_unchanged": true,
@@ -43,7 +43,7 @@
     "report_pages_after_update": 5,
     "all_report_pages_visually_checked_after_update": true,
     "embedded_in_current_report": false,
-    "delivery_location": "02_论文插图/图1_出发返程与搜索.png and .pdf"
+    "delivery_location": "02_论文插图/补图S1_出发返程与搜索.png and .pdf"
   },
   "direction_readout_revision": {
     "research_focus": "Artificial direction encoding and external trained readout; homing as application validation",
@@ -146,5 +146,58 @@
     "experiment_source_data_config_and_figures_unchanged": true,
     "new_experiments_run": false,
     "neural_simulation_rerun": false
+  },
+  "report_tables": 2,
+  "report_embedded_figures": 1,
+  "student_style_revision": {
+    "previous_revision": "1340b9c2e40cff10683c36db7fe6ce17433133aa",
+    "previous_report_sha256": "6b02c4b833246b67d4e631bac6e0a56306dbc1cc5c87404c47e002f7b009a1dd",
+    "writing_skill": "humanizer-zh",
+    "audience": "Third-year undergraduate student in artificial intelligence",
+    "style": "Plain formal Chinese with key equations and concrete method explanations",
+    "clarified_topics": [
+      "FlyWire data and Shiu public simulation model versus project input, readout and controller",
+      "Direction input from accumulated simulated turn observations",
+      "Exact distances supplied by route configuration",
+      "Supervised external readout weights with fixed connectome synapses",
+      "Geometrically calculated return turn and distance",
+      "One new response per held-out direction and the 0-degree disconnection control"
+    ],
+    "core_figure": {
+      "source": "examples/search-20261104/raw/original/calibration.npz",
+      "source_sha256": "427a4d5d1fe9fb157f35980aa2a86c359b11d3f801536a7f355c9e4f86202780",
+      "test_directions": 16,
+      "feature_neurons": 128,
+      "window_ms": 250,
+      "counts": "All raw held-out counts, original feature order, linear scale",
+      "saved_readout_predictions_verified": true,
+      "png_dpi": 400,
+      "pdf_has_bitmap_images": false,
+      "pdf_fonts_embedded": true,
+      "png_and_pdf_visually_inspected": true,
+      "sha256": {
+        "png": "5272ee26e99e31b68c7202d08af55db24e7567ddb0463fcf602519f901c1003a",
+        "pdf": "1533eb9da5d818330c4670fc28907a82730f0017e438e9e73825be58cff9e218"
+      },
+      "delivery_location": "02_论文插图/图1_方向放电与读出.png and .pdf",
+      "embedded_in_current_report": true
+    },
+    "heldout_mae_deg": 4.24455919194248,
+    "heldout_max_deg": 8.754984690009408,
+    "minimum_return_distance_reduction_percent": 60.4157950827141,
+    "all_report_table_numeric_cells_match_saved_csv": true,
+    "section_and_styles_unchanged": true,
+    "preserved_reference_package_entries": 13,
+    "body_font_size_half_points": 24,
+    "native_math_elements": 4,
+    "report_tables": 2,
+    "report_embedded_figures": 1,
+    "static_figures_in_supplement": 4,
+    "rendered_pages": 5,
+    "all_five_pages_visually_inspected": true,
+    "experiments_algorithms_configs_and_trajectory_unchanged": true,
+    "new_experiments_run": false,
+    "neural_simulation_rerun": false,
+    "previous_report_preserved_in_task_cache_and_git": true
   }
 }

@@ -10,6 +10,7 @@ import csv
 import hashlib
 import json
 from pathlib import Path
+import struct
 import zipfile
 from lxml import etree as E
 from format_report import NS, q, set_prop, text_of, xml_bytes
@@ -79,6 +80,8 @@ def build(reference, output):
     body = document.find(q("w:body"))
     patterns = body.findall(q("w:p"))
     table_pattern = deepcopy(body.find(q("w:tbl")))
+    image_pattern = next(p for p in patterns if p.find('.//w:drawing', NS) is not None)
+    embedded_media = {}
     section = deepcopy(body.find(q("w:sectPr")))
     styles = E.fromstring(parts["word/styles.xml"])
     for sid, name, index, outline in [("FinalTitle", "Title", 0, None),
@@ -128,6 +131,35 @@ def build(reference, output):
 
     def heading(text, *, page=False):
         return paragraph(text, 2, keep=True, page=page)
+
+    def figure(path, caption):
+        image_bytes = path.read_bytes()
+        if image_bytes[:8] != b'\x89PNG\r\n\x1a\n':
+            raise ValueError('Paper figure must be a PNG')
+        width, height = struct.unpack('>II', image_bytes[16:24])
+        cx = int(14.65 * 360000)
+        cy = round(cx * height / width)
+        p = deepcopy(image_pattern)
+        pp = p.find(q('w:pPr'))
+        set_prop(pp, 'w:jc', val='center')
+        set_prop(pp, 'w:keepNext', val=1)
+        set_prop(pp, 'w:snapToGrid', val=0)
+        set_prop(pp, 'w:spacing', before=60, after=60, line=240, lineRule='auto')
+        for extent in p.findall('.//wp:extent', NS) + p.findall('.//a:xfrm/a:ext', NS):
+            extent.set('cx', str(cx))
+            extent.set('cy', str(cy))
+        for node in p.findall('.//wp:effectExtent', NS):
+            for key in ['l', 't', 'r', 'b']:
+                node.set(key, '0')
+        picture_props = p.findall('.//{http://schemas.openxmlformats.org/drawingml/2006/picture}cNvPr')
+        for node in p.findall('.//wp:docPr', NS) + picture_props:
+            node.set('name', '方向放电响应与读出')
+            node.set('descr', '16个未见方向的128维放电计数及方向预测；平均角误差4.24度。')
+        for blip in p.findall('.//a:blip', NS):
+            blip.set(q('r:embed'), 'rIdDirectionReadout')
+        embedded_media['word/media/paper_direction_readout.png'] = image_bytes
+        body.append(p)
+        paragraph(caption, 76, indent=False)
 
     def table(caption, rows, widths):
         paragraph(caption, 76, keep=True, indent=False)
@@ -204,21 +236,24 @@ def build(reference, output):
     paragraph(TITLE, 0, keep=True)
     paragraph(text_of(patterns[1]), 1)
     paragraph("摘要", 7, keep=True)
-    paragraph(f"连接组放电用于导航，需要从群体响应中恢复连续方向。本文采用固定果蝇中央复合体网络，以岭回归学习放电与方向的映射，并接入归巢任务。48 个标定样本训练后，16 个未见方向的平均误差为 {normal_mae:.2f}°，五组标签置换后为 {shuffled_range}。在 5° 观测噪声、搜索预算 72 的对照中，正常读出到达 {count(normal_trial)}，平均路程较五组置换至少缩短 {minimum_distance_reduction:.1f}%。相同噪声与预算下，三条路线、十个新种子的验证到达 30/30，展示了读出方向在运动任务中的实际作用。", indent=False)
+    paragraph(f"本文研究果蝇连接组的下游放电能否被读成连续方向，并将读出结果用于归巢。基于 FlyWire 数据与公开模型，构建人工方向刺激和岭回归读出接口。48 个样本训练后，读出器在 16 个未见输入方向上的平均角误差为 {normal_mae:.2f}°。在 5° 观测噪声、搜索预算 72 的标签对照中，正常读出到达 {count(normal_trial)}，平均返程路程较五组标签置换至少缩短 {minimum_distance_reduction:.1f}%。相同噪声与预算下，三条路线、十个新种子的验证到达 30/30。结果表明，放电中的方向信息可以通过监督学习读出，并用于后续归巢控制。", indent=False)
     paragraph("关键词  果蝇连接组；方向编码；神经读出；岭回归；归巢验证", indent=False)
     heading("一、引言")
-    paragraph("归巢通过运动方向和距离估计起点位置，方向读数决定每段行程如何累积为位移。FlyWire 提供果蝇连接图与细胞注释[1–2]，Shiu 等的模型支持连接组放电模拟[3]。将这些响应用于运动控制，需要建立可用的方向读出。本文以未见方向误差检验方向信息在网络传播后的可读出性，以标签置换分析正确映射的作用，再以归巢到达次数和路程评价其任务价值。")
+    paragraph("归巢是离开起点后，依据运动信息估计起点位置并返回的过程。FlyWire 提供果蝇连接图与细胞注释[1–2]，Shiu 等的公开模型提供放电仿真[3]。本文在此基础上实现方向编码、监督读出和二维归巢任务。未见方向测试检验读出精度，标签置换检验正确映射的作用，多路线实验评价读出结果在归巢中的表现。")
     heading("二、研究方法")
-    paragraph("采用 FAFB v783 数据[4]与 v2.1.0 注释，提取 2,869 个中央复合体（CX）神经元及内部 300,065 条连接记录。沿用公开模型的带符号权重和泄漏积分发放（LIF）方程，在 Brian2 2.5.1[5]中模拟，步长 0.1 ms、窗口 250 ms。神经元累积输入，达到阈值后产生脉冲并复位，脉冲再沿连接传播。网络连接与权重固定，每个刺激窗口从静息状态开始。")
-    paragraph(["选择 47 个 EPG 神经元接收方向刺激，按原始行序均匀分配人工偏好角 ", equation(math_sub("φ", "i")), "。方向 θ 对应的 Poisson 输入频率为 ", equation(math_sub("r", "i"), "(θ)=15+67.5[1+cos(θ−", math_sub("φ", "i"), ")]"), "，单位为 Hz。输入方向越接近某神经元的偏好角，其刺激频率越高；方向改变时，高频刺激随之转移。按 EPG 输出连接绝对权重之和选取 128 个非输入神经元，统计各自在窗口内的放电次数，形成一个 128 维响应向量。固定窗口下，计数与平均发放率等价，保留了不同神经元响应强弱的差异。"])
-    paragraph("读出器用监督学习建立放电与方向的映射。训练方向每隔 22.5° 取一个，共 16 个，每个方向使用不同随机种子重复三次，得到 48 个样本。重复刺激用于呈现同一方向下的放电波动。各维特征减去训练均值，再除以标准差与 1 的较大值，避免低变化特征被过度放大。岭回归同时拟合方向的余弦和正弦，最小化预测分量与目标分量的平方误差，并加入系数为 10 的权重平方惩罚，以约束小样本条件下的回归权重。")
-    paragraph(["角度采用正弦和余弦表示，是为了保留圆周连续性。例如 359° 与 1° 相邻，直接回归角度数值会遇到跨零点的突变。令标准化特征为 x，读出结果为 ", equation("(", math_hat("c"), ",", math_hat("s"), ")=xW+b"), "，再用 ", equation(math_hat("θ"), "=atan2(", math_hat("s"), ",", math_hat("c"), ")"), " 恢复方向。训练得到的 W 决定各神经元的放电如何参与两个分量的估计，b 为训练目标均值。一组放电响应通过群体计数及学习到的组合权重，被转换为连续方向读数。"])
-    paragraph("归巢阶段，外部程序累积带噪声的转向观测，将估计朝向编码为上述刺激。历次方向读数按观测转向旋转到当前朝向，再作圆周平均；随后将每段准确距离按方向分解并累加，以位移估计保存路径记忆。返程目标取估计位置的相反向量，长度决定行走距离，方向与当前估计朝向之差决定转角。个体先执行直接返程，再依据到达信号决定是否搜索；扩展方形搜索的间隔为 1.5，额外路程预算为 72。环境在个体进入起点半径 1 的区域时提供到达信号并停止运动。")
+    paragraph("方法包含方向编码、读出训练和归巢控制。连接组负责产生放电，外部读出器学习方向，控制程序累积位置并计算动作。采用 FAFB v783 数据[4]与 v2.1.0 注释，提取 2,869 个中央复合体（CX）神经元及内部 300,065 条连接记录。沿用公开模型的带符号权重和泄漏积分发放（LIF）方程，在 Brian2 2.5.1[5]中模拟，步长 0.1 ms。神经元达到阈值后放电并复位；网络权重固定，每个 250 ms 刺激窗口从静息状态开始。")
+    paragraph(["选择 47 个 EPG 神经元作为输入，按原始行序均匀分配人工偏好角 ", equation(math_sub("φ", "i")), "。方向 θ 对应的 Poisson 刺激频率为 ", equation(math_sub("r", "i"), "(θ)=15+67.5[1+cos(θ−", math_sub("φ", "i"), ")]"), "，单位为 Hz。方向越接近偏好角，刺激频率越高。刺激沿连接传播后，统计 128 个非输入神经元的放电次数，得到 128 维特征。读出神经元按 EPG 输出连接绝对权重之和选取，选择过程先于训练。"])
+    paragraph("训练时，将每组放电特征与产生它的输入方向配对。方向每隔 22.5° 取一个，共 16 个，各用不同随机种子重复三次，得到 48 个样本。特征减去训练均值，再除以标准差与 1 的较大值。岭回归拟合方向的余弦和正弦，最小化分量预测的平方误差，并加入系数为 10 的权重平方惩罚，约束回归权重。")
+    paragraph(["用正弦、余弦表示方向，可以处理 359° 与 1° 相邻这类跨零点情况。令标准化特征为 x，两个预测分量为 ", equation("(", math_hat("c"), ",", math_hat("s"), ")=xW+b"), "，方向由 ", equation(math_hat("θ"), "=atan2(", math_hat("s"), ",", math_hat("c"), ")"), " 恢复。训练求解的是读出权重 W，它决定各神经元的放电如何参与方向估计；b 为训练目标均值。连接组中的突触权重保持固定。"])
+    paragraph("归巢时，仿真程序在每次实际转向上加入噪声，生成转向观测。控制器累积这些观测得到估计朝向，将其编码为刺激，再从放电中读出方向。历次读数按观测转向旋转到当前朝向并作圆周平均。每步距离由路线配置直接提供，按准确值使用；控制器将距离按读出方向分解并累加，保存当前位置相对起点的估计。")
+    paragraph("返程向量取估计位置的相反向量，其长度给出返程距离，其方向与当前估计朝向之差给出转角。转角由几何计算得到。直接返程未到达时，执行间隔 1.5、额外路程预算 72 的方形搜索。环境在进入起点半径 1 的区域时提供到达信号，运动随即停止。")
     heading("三、实验设计")
-    paragraph("方向读出用 16 个未见方向检验，测试角度取相邻训练方向的中点，整体偏移 11.25°，采用不同的放电随机种子。误差取预测方向与输入方向的圆周最短夹角。标签置换检验正确映射的作用：用种子 801–805 置换标签，同方向的三次样本共享标签，其余拟合设置一致。五组置换复用相同数据。关闭读出将放电特征置零，用于评价方向信息的行为作用；断开 CX 连接则检验下游响应对连接传播的依赖。")
-    paragraph("归巢场地无障碍，距离准确，原折线、往复折线和渐变转向三条路线总长均为 18。转向观测叠加独立零均值高斯噪声，标准差为 0°、5°、15°。读出与搜索对照用种子 601–605，每档 15 个路线与种子组合；多路线验证用种子 701–710，每档 30 个组合。返程转向执行误差标准差为 0° 或 2°，搜索预算取 0、18、36、72。几何基线积分同一份观测作为参考，各方法共用搜索与到达规则，执行误差按动作序号对齐。统计到达次数及包含失败的平均路程，距离均为仿真单位。")
+    paragraph("方向测试采用 16 个未见输入角度，位于相邻训练方向的中点，偏移量为 11.25°，各生成一次新随机种子的响应。读出误差取预测方向与输入方向的圆周最短夹角。用种子 801–805 置换训练标签，同方向的三次样本共享置换标签，特征和拟合设置不变；五组置换复用相同数据。另将放电特征置零作为关闭读出对照，断开 CX 连接检验下游响应对连接传播的依赖。")
+    paragraph("归巢场地无障碍，三条路线分别为原折线、往复折线和渐变转向，总长均为 18。外出转向观测加入独立零均值高斯噪声，标准差为 0°、5°、15°；返程转向执行误差标准差为 0° 或 2°。标签与搜索对照用种子 601–605，每档 15 个路线与种子组合；多路线验证用种子 701–710，每档 30 个组合，路线间共用种子。搜索预算取 0、18、36、72。几何基线直接积分同一份观测，共用搜索与到达规则，执行误差按动作序号对齐。统计到达次数和包含失败试验的平均路程，距离均为仿真单位。")
     heading("四、结果与分析")
-    paragraph(f"正常读出在未见方向上的平均误差为 {normal_mae:.2f}°，最大为 {float(normal_decoder['heldout_max_deg']):.2f}°。测试角度位于训练点之间，与最近训练方向相差 11.25°；全部测试误差均小于这一间隔，表明读出器能在这些未参与训练的方向上恢复连续角度。标签置换使用相同放电特征，平均误差为 {shuffled_range}，说明有效读出依赖学到的正确方向映射。断开 CX 连接后，所选下游神经元的放电计数为零，确认了这些特征对连接传播的依赖。")
+    paragraph(f"图一展示未见方向的放电响应与读出结果。平均角误差为 {normal_mae:.2f}°，最大为 {float(normal_decoder['heldout_max_deg']):.2f}°，均小于测试角度与最近训练方向之间的 11.25°。这说明读出器能恢复这些训练点之间的方向。在 0° 输入下断开 CX 连接后，下游读出神经元的放电计数为零，说明该响应依赖连接传播。")
+    figure(ROOT / 'reports/assets/paper_direction_readout.png',
+           '图一 16 个未见输入方向的放电响应与读出。左图为 128 个神经元在 250 ms 内的放电次数，右图虚线表示输入与读出一致。')
     rows=[["读出条件","未见方向\n平均角误差","归巢到达次数","平均返程路程"]]
     for label,method,variant in [("正常读出","cx_normal",0),("关闭读出","readout_off",0)]:
         a=one(controls,method=method,variant=variant,noise_deg=5,budget=72)
@@ -228,20 +263,20 @@ def build(reference, output):
                    f"{min(shuffled_successes)}/15–{max(shuffled_successes)}/15",
                    f"{min(shuffled_distances):.2f}–{max(shuffled_distances):.2f}"])
     table("表一 读出对照 归巢采用种子 601–605 观测噪声 5° 预算 72",rows,[2500,1900,1700,2206])
-    paragraph(f"表一置换行列出五组结果范围。正常读出到达 {count(normal_trial)}，平均路程为 {normal_distance:.2f}，较五组置换至少缩短 {minimum_distance_reduction:.1f}%，同时获得更多到达次数。置换 804 到达 13/15、平均路程为 38.05，说明搜索能补救部分方向错误；正确映射进一步减少了行走代价。")
+    paragraph(f"表一置换行各列给出五组结果范围。正常读出获得更多到达次数，平均路程较五组置换至少缩短 {minimum_distance_reduction:.1f}%。置换 804 到达 13/15，平均路程为 38.05，说明搜索能补救部分方向错误；正确映射进一步减少了行走代价。")
     low_direct = one(old, method="cx_direct", noise_deg=5)
     low_search = one(old, method="cx_search", noise_deg=5)
     paragraph(f"在 5° 观测噪声下，加入局部搜索使到达次数由 {count(low_direct)} 增至 {count(low_search)}，平均路程由 {float(low_direct['mean_return_distance']):.2f} 增至 {float(low_search['mean_return_distance']):.2f}。表二检验三条路线与十个不同随机种子下的归巢表现。")
-    rows = [["观测噪声", "理想返程到达", "2° 误差到达", "平均路程\n理想 / 有误差"]]
+    rows = [["观测噪声\n标准差", "0° 执行误差\n到达次数", "2° 执行误差\n到达次数", "平均返程路程\n0° / 2° 执行误差"]]
     for noise in [0, 5, 15]:
         a,b=trial(noise),trial(noise,2)
         rows.append([f"{noise}°",count(a),count(b),f"{float(a['mean_return_distance']):.2f} / {float(b['mean_return_distance']):.2f}"])
     table("表二 多路线与不同随机种子下的归巢验证 搜索预算 72",rows,[1300,2050,2050,2906])
-    paragraph("在 0° 和 5° 观测噪声下，两种执行条件均到达 30/30；15° 下分别为 21/30 和 20/30。转向误差沿外出过程累积，改变位移投影，使估计起点发生偏移，因而需要更大的搜索覆盖范围。几何基线提供同一运动观测下的任务参考：在 2° 执行误差下，两种方法在三档噪声中分别获得相同的到达次数。这说明学习到的神经方向读数能够作为位置积分的有效输入，支持后续归巢。")
-    paragraph(f"预算比较量化了到达表现与行走成本的关系。在 5° 观测噪声下，预算由 36 增至 72，理想执行和带执行误差条件分别从 {count(trial(5,0,36))}、{count(trial(5,2,36))} 增至 30/30。15° 观测噪声和 2° 执行误差下，到达次数从 {count(trial(15,2,36))} 增至 {count(trial(15,2,72))}，平均路程从 {float(trial(15,2,36)['mean_return_distance']):.2f} 增至 {float(trial(15,2,72)['mean_return_distance']):.2f}。扩大预算增加了目标被搜索覆盖的机会，可依据可用路程选择到达率与成本之间的平衡。")
+    paragraph("两种执行条件在 0° 和 5° 观测噪声下均到达 30/30。观测误差沿外出过程累积，改变位移投影，使估计起点偏移。几何基线提供相同观测下的参考：在 2° 执行误差下，三档噪声中的到达次数与神经方法相同，说明读出的方向能作为位置积分的有效输入。")
+    paragraph(f"预算从 36 增至 72 时，5° 观测噪声下两种执行条件分别由 {count(trial(5,0,36))}、{count(trial(5,2,36))} 增至 30/30。15° 观测噪声、2° 执行误差下，到达次数由 {count(trial(15,2,36))} 增至 {count(trial(15,2,72))}，平均路程由 {float(trial(15,2,36)['mean_return_distance']):.2f} 增至 {float(trial(15,2,72)['mean_return_distance']):.2f}。增加预算扩大了搜索覆盖范围，也增加了行走成本。")
     heading("五、讨论与结论")
-    paragraph(f"本文通过监督读出，将固定果蝇中央复合体网络的下游放电转换为连续方向估计。48 个样本训练后，16 个未见方向的平均误差为 {normal_mae:.2f}°；标签对照同时显示，正确映射改善了归巢到达次数与行走效率。三条路线、十个随机种子在 5° 观测噪声、搜索预算 72 下到达 30/30，加入 2° 返程转向误差后保持这一表现。方向恢复精度与归巢结果共同展示了从连接组放电获取运动信息并将其用于任务的可行性。")
-    paragraph("代码与补充材料见 github.com/yinyiqing/fly-brain-navigation，含置换明细、轨迹图、预算曲线及窗口和运动平均比较。保存的神经输出可用于重放导航，核对全部 10 张结果表。")
+    paragraph(f"本文用 48 个样本训练外部读出器，将固定果蝇连接组的放电转换为方向，未见输入方向的平均误差为 {normal_mae:.2f}°。标签置换对照中，正确映射同时提高到达次数并缩短路程。实验从方向恢复精度和归巢行为两方面，验证了这些方向读数在位置积分与动作计算中的作用。")
+    paragraph("代码与补充材料见 github.com/yinyiqing/fly-brain-navigation，包含置换明细、归巢轨迹、预算曲线、窗口与运动平均比较。保存的神经输出可重放导航并核对 10 张结果表。")
     paragraph("参考文献",143,keep=True)
     for text in [
         "[1] Dorkenwald S, et al. Neuronal wiring diagram of an adult brain. Nature, 2024. DOI: 10.1038/s41586-024-07558-y.",
@@ -257,6 +292,12 @@ def build(reference, output):
         if r.get('Type','').endswith('/image'):rels.remove(r)
     for name in list(parts):
         if name.startswith('word/media/') and not name.endswith('/'):del parts[name]
+    parts.update(embedded_media)
+    E.SubElement(rels, q('pr:Relationship'), {
+        'Id': 'rIdDirectionReadout',
+        'Type': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image',
+        'Target': 'media/paper_direction_readout.png',
+    })
     parts['word/document.xml']=xml_bytes(document)
     parts['word/styles.xml']=xml_bytes(styles)
     parts['word/_rels/document.xml.rels']=xml_bytes(rels)

@@ -29,7 +29,8 @@ def export(output, revision):
     tree_id = git("rev-parse", f"{object_id}^{{tree}}").decode().strip()
     kind = git("cat-file", "-t", object_id).decode().strip()
     archive = zipfile.ZipFile(io.BytesIO(git("archive", "--format=zip", object_id)))
-    required = [f"reports/{PAPER}", "reports/assets/paper_trajectory.pdf",
+    required = [f"reports/{PAPER}", "reports/assets/paper_direction_readout.png",
+                "reports/assets/paper_direction_readout.pdf", "reports/assets/paper_trajectory.pdf",
                 "examples/validation-20261104/robustness_summary.csv"]
     for name in required:
         if name not in archive.namelist():
@@ -50,10 +51,11 @@ def export(output, revision):
 
     copy(f"reports/{PAPER}", f"01_论文/{PAPER}")
     results = "examples/validation-20261104"
-    figures = [("reports/assets/paper_trajectory", "图1_出发返程与搜索"),
-               (f"{results}/figure1_neural_controls", "图2_神经方向对照"),
-               (f"{results}/figure2_return_robustness", "图3_返程执行误差"),
-               (f"{results}/figure3_budget_tradeoff", "图4_搜索预算与代价")]
+    figures = [("reports/assets/paper_direction_readout", "图1_方向放电与读出"),
+               ("reports/assets/paper_trajectory", "补图S1_出发返程与搜索"),
+               (f"{results}/figure1_neural_controls", "补图S2_神经方向对照"),
+               (f"{results}/figure2_return_robustness", "补图S3_返程执行误差"),
+               (f"{results}/figure3_budget_tradeoff", "补图S4_搜索预算与代价")]
     for source_stem, destination_stem in figures:
         for suffix in ["png", "pdf"]:
             copy(f"{source_stem}.{suffix}", f"02_论文插图/{destination_stem}.{suffix}")
