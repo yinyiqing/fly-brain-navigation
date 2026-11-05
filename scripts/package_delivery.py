@@ -63,6 +63,7 @@ def export(output, revision):
     for path in sorted((source / results).glob("*.csv")):
         copy(f"{results}/{path.name}", f"03_结果数据/数据表/{path.name}")
     copy("docs/validation_results.md", "03_结果数据/实验结果说明.md")
+    copy("docs/paper_supplement.md", "03_结果数据/论文补充材料.md")
     copy("docs/final_delivery.md", "00_阅读说明.md")
 
     files = sorted(p for p in output.rglob("*") if p.is_file())

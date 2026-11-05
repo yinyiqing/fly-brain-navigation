@@ -1,6 +1,6 @@
 {
   "artifact": "reports/果蝇连接组方向读出与归巢验证_24025110_尹一清.docx",
-  "sha256": "42c902c60998aa76a0c603e022cd0b16be7e34b68dccf8d5c000b2e711acab4e",
+  "sha256": "6b02c4b833246b67d4e631bac6e0a56306dbc1cc5c87404c47e002f7b009a1dd",
   "reference_sha256": "6508f624032146a8554fddcb05e7c584c07ca9d4c5f346d05b757f118d1259c3",
   "reference_unchanged": true,
   "section_properties_unchanged": true,
@@ -103,5 +103,48 @@
     "all_five_pages_visually_inspected": true,
     "trajectory_figure": "Unchanged static supplement",
     "writing": "Explain performed methods and findings directly; consolidate scope statement in discussion"
+  },
+  "narrative_revision": {
+    "previous_revision": "67aeedf17ddc93b53004297b13d52f51b731c84d",
+    "previous_report_sha256": "42c902c60998aa76a0c603e022cd0b16be7e34b68dccf8d5c000b2e711acab4e",
+    "writing_skill": "humanizer-zh",
+    "organization": [
+      "Direction readout accuracy",
+      "Behavioral value of correct direction mapping",
+      "Multi-route homing validation"
+    ],
+    "heldout_mae_deg": 4.24455919194248,
+    "heldout_max_deg": 8.754984690009408,
+    "nearest_training_direction_distance_deg": 11.25,
+    "all_heldout_errors_smaller_than_nearest_training_direction_distance": true,
+    "minimum_return_distance_reduction_percent": 60.4157950827141,
+    "distance_comparison": {
+      "baseline": "Five training-label permutations, not the geometric reference",
+      "routes": 3,
+      "navigation_seeds": [
+        601,
+        602,
+        603,
+        604,
+        605
+      ],
+      "observation_noise_deg": 5,
+      "search_budget": 72,
+      "mean_includes_failed_trials": true
+    },
+    "supplement": "docs/paper_supplement.md",
+    "supplement_window_rows_verified": 6,
+    "supplement_motion_average_rows_verified": 6,
+    "all_report_table_numeric_cells_match_saved_csv": true,
+    "section_and_styles_unchanged": true,
+    "preserved_reference_package_entries": 13,
+    "body_font_size_half_points": 24,
+    "native_math_elements": 4,
+    "report_tables": 2,
+    "static_figures_in_supplement": 4,
+    "all_five_pages_visually_inspected": true,
+    "experiment_source_data_config_and_figures_unchanged": true,
+    "new_experiments_run": false,
+    "neural_simulation_rerun": false
   }
 }

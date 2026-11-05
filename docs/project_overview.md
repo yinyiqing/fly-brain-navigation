@@ -38,7 +38,7 @@ flowchart LR
 
 先读仓库 README 与 `docs/validation_results.md`，查看 `reports/assets/paper_trajectory.png` 和三张验证图。论文轨迹图标明外出、返程、搜索的阶段及方向，并提供矢量 PDF；固定使用原路线和种子 701，不通过挑选试验美化效果。
 
-最终论文为 `reports/果蝇连接组方向读出与归巢验证_24025110_尹一清.docx`，沿用用户指定参考格式，共 5 页。方法部分展开了刺激编码、放电特征、训练样本、岭回归目标及圆周角度读出；分析部分解释标签对照与归巢误差。正文以两张表汇总结果，完整置换明细和四张静态图作为补充材料。此前报告保留。用 `scripts/package_delivery.py --output ../最终成果` 可导出完整成果包，具体说明见 `docs/final_delivery.md`。
+最终论文为 `reports/果蝇连接组方向读出与归巢验证_24025110_尹一清.docx`，沿用用户指定参考格式，共 5 页。方法部分展开刺激编码、放电特征、训练样本、岭回归目标及圆周角度读出；结果围绕方向恢复、标签映射的行为作用和多路线归巢组织。正文以两张表汇总结果，窗口与运动平均比较移至 `docs/paper_supplement.md`，并与完整置换明细和四张静态图共同提供。此前报告保留。用 `scripts/package_delivery.py --output ../最终成果` 可导出完整成果包，具体说明见 `docs/final_delivery.md`。
 
 完整仿真在 Linux、Python 3.10 和固定依赖环境中运行。服务器中已有数据和环境，README 提供命令。仅检查导航与重放结果时，无需 Brian2、大数据下载或显卡，只需 NumPy 和 pandas。GitHub Actions 会运行单元检查、旧结果导航重放和最新十张验证表核对；它不执行完整神经仿真。
 
